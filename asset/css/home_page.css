@@ -1,0 +1,86 @@
+@import url(color.css);
+
+.navbar{
+    display: flex;
+}
+
+.navbar a {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-left: 4rem ;
+    transition: all 0.5s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.navbar a:hover,.navbar a:active{
+
+    color: var(--main-color);
+    border-bottom: 3px solid var(--main-color);
+}
+
+.home-section{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px; 
+    padding: 2rem 9%;
+
+}
+
+.schedule-container {
+    flex: 1;
+    width: 50%;
+    color: var(--bg-color); 
+    background-color: #f9f9f9; 
+    padding: 20px;
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+    text-align: center;
+}
+
+/* Calender container layout */
+.calender-container {
+    display: flex;
+    justify-content: space-between; /* Space out calender and search-bar */
+    align-items: center; /* Align items vertically in the middle */
+    width: 100%; /* Take full width of the parent */
+    gap: 20px; /* Add space between calender and search-bar */
+    margin-top: 20px; /* Add margin to separate from the headline */
+}
+
+.calender {
+    flex: 1;
+    text-align: left;
+}
+
+.search-bar {
+    color: #f9f9f9;
+}
+
+
+/* Paragraph container on the right */
+.paragraph-container {
+    flex: 1; /* Take up available space */
+    max-width: 50%; /* Limit the width */
+    background-color: #f9f9f9; /* Light background color */
+    padding: 20px; /* Add padding inside the container */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+.paragraph-container .paragraph{
+    color: black;
+}
+
+
+/* about us section */
+
+.aboutus{
+   background-color: #353535; 
+}
