@@ -149,7 +149,7 @@ $notificationsQuery = $con->query("
     SELECT 
         n.notification_id,
         n.user_id,
-        u.first_name AS user_name,  -- Fetch user name
+        u.first_name AS user_name,  
         n.message,
         n.status,
         n.created_at
@@ -392,7 +392,6 @@ $userName = $_SESSION['name'];
                     </table>
                 </div>
             </div>
-
 
             <!-- Advertisements Content -->
             <div id="advertisements-content" class="content-section">
@@ -971,6 +970,7 @@ $userName = $_SESSION['name'];
                     </table>
                 </div>
             </div>
+            
         </div>
     </div>
 
