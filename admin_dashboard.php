@@ -735,16 +735,6 @@ $userName = $_SESSION['name'];
             <div id="notifications-content" class="content-section">
                 <h2>Notifications</h2>
 
-                <!-- Search and Filters -->
-                <div class="filters">
-                    <input type="text" id="notificationSearchInput" placeholder="Search by User Name..." onkeyup="filterNotifications()">
-                    <select id="statusFilterNotification" onchange="filterNotifications()">
-                        <option value="">All Statuses</option>
-                        <option value="unread">Unread</option>
-                        <option value="read">Read</option>
-                    </select>
-                </div>
-
                 <!-- Send Notifications Form -->
                 <div class="send-notifications">
                     <h3>Send Notification</h3>
@@ -780,6 +770,16 @@ $userName = $_SESSION['name'];
                 <!-- Notifications Table -->
                 <div class="all-notifications">
                     <h3>All Notifications</h3>
+
+                    <!-- Search and Filters -->
+                    <div class="filters">
+                        <input type="text" id="notificationSearchInput" placeholder="Search by User Name..." onkeyup="filterNotifications()">
+                        <select id="statusFilterNotification" onchange="filterNotifications()">
+                            <option value="">All Statuses</option>
+                            <option value="unread">Unread</option>
+                            <option value="read">Read</option>
+                        </select>
+                    </div>
                     <table>
                         <thead>
                             <tr>
