@@ -615,13 +615,28 @@ $userName = $_SESSION['name'];
                 </div>
             </div>
 
-            <!-- Garbage Ratings Content -->
+            <!-- Garbage Ratings Content -->            
             <div id="ratings-content" class="content-section">
                 <h2>Garbage Ratings</h2>
-                <!-- Search and Sorting -->
+                <!-- Search, Dropdown, and Sort Button -->
                 <div class="filters">
-                    <input type="text" id="ratingSearchInput" placeholder="Search by User Name or Garbage Category..." onkeyup="filterGarbageRatings()">
-                    <button onclick="sortGarbageRatings()">Sort by Highest Price</button>
+                    <!-- Search Bar -->
+                    <input type="text" id="ratingSearchInput" placeholder="Search by Buyer or Category..." onkeyup="filterGarbageRatings()">
+                    
+                    <!-- Dropdown for Categories -->
+                    <select id="categoryFilter" onchange="filterGarbageRatings()">
+                        <option value="">All Categories</option>
+                        <?php
+                        // Fetch all categories for the dropdown
+                        $categoriesQuery = $con->query("SELECT category_name FROM GarbageCategory");
+                        while ($category = $categoriesQuery->fetch_assoc()) {
+                            echo "<option value='" . htmlspecialchars($category['category_name']) . "'>" . htmlspecialchars($category['category_name']) . "</option>";
+                        }
+                        ?>
+                    </select>
+                    
+                    <!-- Sort Button -->
+                    <button onclick="sortGarbageRatings()">Sort by Price (High to Low)</button>
                 </div>
 
                 <!-- Garbage Ratings Table -->
@@ -650,7 +665,7 @@ $userName = $_SESSION['name'];
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="6">No garbage ratings found.</td>
+                                    <td colspan="5">No garbage ratings found.</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>
@@ -719,6 +734,7 @@ $userName = $_SESSION['name'];
             <!-- Notifications Content -->
             <div id="notifications-content" class="content-section">
                 <h2>Notifications</h2>
+
                 <!-- Search and Filters -->
                 <div class="filters">
                     <input type="text" id="notificationSearchInput" placeholder="Search by User Name..." onkeyup="filterNotifications()">
@@ -727,6 +743,30 @@ $userName = $_SESSION['name'];
                         <option value="unread">Unread</option>
                         <option value="read">Read</option>
                     </select>
+                </div>
+
+                <!-- Send Notifications Form -->
+                <div class="send-notifications">
+                    <h3>Send Notification</h3>
+                    <form method="POST" action="./controller/send_notification.php">
+                        <!-- User Selection Dropdown -->
+                        <select name="user_id" required>
+                            <option value="">Select User</option>
+                            <?php
+                            // Fetch all users for the dropdown
+                            $usersQuery = $con->query("SELECT user_id, first_name, last_name FROM Users");
+                            while ($user = $usersQuery->fetch_assoc()) {
+                                echo "<option value='" . htmlspecialchars($user['user_id']) . "'>" . htmlspecialchars($user['first_name'] . " " . $user['last_name']) . "</option>";
+                            }
+                            ?>
+                        </select>
+
+                        <!-- Notification Message -->
+                        <textarea name="message" placeholder="Enter notification message..." required></textarea>
+
+                        <!-- Submit Button -->
+                        <button type="submit">Send Notification</button>
+                    </form>
                 </div>
 
                 <!-- Notifications Table -->
@@ -767,6 +807,8 @@ $userName = $_SESSION['name'];
                     </table>
                 </div>
             </div>
+
+
         </div>
 
              

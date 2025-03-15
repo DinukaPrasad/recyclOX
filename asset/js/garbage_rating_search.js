@@ -1,12 +1,13 @@
 function filterGarbageRatings() {
     // Get search value
     const search = document.getElementById('ratingSearchInput').value;
+    const category = document.getElementById('categoryFilter').value;
 
     // Create an XMLHttpRequest object
     const xhr = new XMLHttpRequest();
 
     // Define the PHP script URL with query parameters
-    const url = `./controller/fetch_garbage_ratings.php?search=${search}`;
+    const url = `./controller/fetch_garbage_ratings.php?search=${search}&category=${category}`;
 
     // Configure the request
     xhr.open('GET', url, true);

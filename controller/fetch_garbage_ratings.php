@@ -3,6 +3,7 @@ require_once('../config/db_connection.php');
 
 // Get search and sorting parameters
 $search = isset($_GET['search']) ? $_GET['search'] : '';
+$category = isset($_GET['category']) ? $_GET['category'] : '';
 $sort = isset($_GET['sort']) ? $_GET['sort'] : '';
 
 // Build the SQL query
@@ -27,6 +28,11 @@ if (!empty($search)) {
         u.first_name LIKE '%$search%' OR
         gc.category_name LIKE '%$search%'
     )";
+}
+
+// Add category filter
+if (!empty($category)) {
+    $query .= " AND gc.category_name = '$category'";
 }
 
 // Add sorting
