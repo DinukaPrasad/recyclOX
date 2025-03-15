@@ -312,8 +312,9 @@ $userName = $_SESSION['name'];
                     <!-- Add New Staff Member Form -->
                     <div class="add-staff">
                         <h3>Add New Staff Member</h3>
-                        <?php if (isset($errors)): ?>
-                            <p><?php echo $errors; ?></p>
+                        <?php if (isset($_SESSION['staff_error'])): ?>
+                            <p><?php echo $_SESSION['staff_error']; ?></p>
+                            <?php unset($_SESSION['staff_error']); // Clear the error message after displaying ?>
                         <?php endif; ?>
                         <form method="POST" action="./controller/staff_add_function.php">
                             <input type="text" id="staff-first-name" name="first_name" placeholder="First Name:" required>
@@ -328,7 +329,8 @@ $userName = $_SESSION['name'];
                                 <option value="staff">Staff</option>
                             </select>
 
-                            <button type="submit">Add Staff</button>
+                            <!-- Add a submit button with the name "add-staff" -->
+                            <button type="submit" name="add-staff">Add Staff</button>
                         </form>
                     </div>
                 </div>

@@ -55,7 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add-staff'])) {
         $checkEmailQuery->close();
     }
 
+    // Redirect back to the admin dashboard
     header("Location: ../admin_dashboard.php");
-    exit(); 
+    exit();
 }
 ?>
