@@ -25,3 +25,14 @@ function filterNotifications() {
     // Send the request
     xhr.send();
 }
+
+function toggleUserDropdown() {
+    const recipientType = document.getElementById('recipientType').value;
+    const userDropdown = document.getElementById('userDropdown');
+
+    if (recipientType === 'specific_user') {
+        userDropdown.style.display = 'block';
+    } else {
+        userDropdown.style.display = 'none';
+    }
+}

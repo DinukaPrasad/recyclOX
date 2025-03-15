@@ -816,21 +816,6 @@ $userName = $_SESSION['name'];
                 </div>
             </div>
 
-            <!-- JavaScript to Toggle User Dropdown -->
-            <script>
-            function toggleUserDropdown() {
-                const recipientType = document.getElementById('recipientType').value;
-                const userDropdown = document.getElementById('userDropdown');
-
-                if (recipientType === 'specific_user') {
-                    userDropdown.style.display = 'block';
-                } else {
-                    userDropdown.style.display = 'none';
-                }
-            }
-            </script>
-
-
         </div>
 
              
