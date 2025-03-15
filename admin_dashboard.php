@@ -749,8 +749,16 @@ $userName = $_SESSION['name'];
                 <div class="send-notifications">
                     <h3>Send Notification</h3>
                     <form method="POST" action="./controller/send_notification.php">
-                        <!-- User Selection Dropdown -->
-                        <select name="user_id" required>
+                        <!-- Recipient Type Dropdown -->
+                        <select name="recipient_type" id="recipientType" onchange="toggleUserDropdown()" required>
+                            <option value="">Select Recipient Type</option>
+                            <option value="all_users">All Users</option>
+                            <option value="all_staff">All Staff</option>
+                            <option value="specific_user">Specific User</option>
+                        </select>
+
+                        <!-- User Selection Dropdown (Hidden by Default) -->
+                        <select name="user_id" id="userDropdown" style="display: none;">
                             <option value="">Select User</option>
                             <?php
                             // Fetch all users for the dropdown
@@ -807,6 +815,20 @@ $userName = $_SESSION['name'];
                     </table>
                 </div>
             </div>
+
+            <!-- JavaScript to Toggle User Dropdown -->
+            <script>
+            function toggleUserDropdown() {
+                const recipientType = document.getElementById('recipientType').value;
+                const userDropdown = document.getElementById('userDropdown');
+
+                if (recipientType === 'specific_user') {
+                    userDropdown.style.display = 'block';
+                } else {
+                    userDropdown.style.display = 'none';
+                }
+            }
+            </script>
 
 
         </div>
