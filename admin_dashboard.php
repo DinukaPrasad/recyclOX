@@ -635,7 +635,6 @@ $userName = $_SESSION['name'];
                                 <th>Price Per Kg ($)</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody id="garbageRatingsTableBody">
@@ -647,10 +646,6 @@ $userName = $_SESSION['name'];
                                         <td><?= htmlspecialchars($rating['price_per_kg']); ?></td>
                                         <td><?= htmlspecialchars($rating['created_at']); ?></td>
                                         <td><?= htmlspecialchars($rating['updated_at']); ?></td>
-                                        <td>
-                                            <a href="./controller/edit_garbage_rating.php?buyer_id=<?= $rating['buyer_id']; ?>&category_id=<?= $rating['category_id']; ?>">Edit</a> |
-                                            <a href="./controller/delete_garbage_rating.php?buyer_id=<?= $rating['buyer_id']; ?>&category_id=<?= $rating['category_id']; ?>" onclick="return confirm('Are you sure you want to delete this rating?');">Delete</a>
-                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
@@ -692,7 +687,7 @@ $userName = $_SESSION['name'];
                                 <th>Rating</th>
                                 <th>Comment</th>
                                 <th>Created At</th>
-                                <th>Action</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="userRatingsTableBody">
@@ -707,7 +702,6 @@ $userName = $_SESSION['name'];
                                         <td><?= htmlspecialchars($rating['comment']); ?></td>
                                         <td><?= htmlspecialchars($rating['created_at']); ?></td>
                                         <td>
-                                            <a href="./controller/edit_user_rating.php?id=<?= $rating['feedback_id']; ?>">Edit</a> |
                                             <a href="./controller/delete_user_rating.php?id=<?= $rating['feedback_id']; ?>" onclick="return confirm('Are you sure you want to delete this rating?');">Delete</a>
                                         </td>
                                     </tr>

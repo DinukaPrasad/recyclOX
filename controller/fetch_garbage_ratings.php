@@ -48,10 +48,6 @@ if (!empty($ratings)) {
             <td>" . htmlspecialchars($rating['price_per_kg']) . "</td>
             <td>" . htmlspecialchars($rating['created_at']) . "</td>
             <td>" . htmlspecialchars($rating['updated_at']) . "</td>
-            <td>
-                <a href='./controller/edit_garbage_rating.php?buyer_id=" . $rating['buyer_id'] . "&category_id=" . $rating['category_id'] . "'>Edit</a> |
-                <a href='./controller/delete_garbage_rating.php?buyer_id=" . $rating['buyer_id'] . "&category_id=" . $rating['category_id'] . "' onclick='return confirm(\"Are you sure you want to delete this rating?\");'>Delete</a>
-            </td>
         </tr>
         ";
     }
