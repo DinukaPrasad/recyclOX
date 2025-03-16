@@ -1,4 +1,7 @@
 <?php
+// Start the session
+session_start();
+
 // Include the database connection file
 require_once('./config/db_connection.php');
 
@@ -64,7 +67,14 @@ $con->close();
         <div class="logo">RecyclOX Marketplace</div>
         <div class="nav-links">
             <a href="./index.php">Home</a>
-            <a href="./login_register.php">Login</a>
+            <?php if (isset($_SESSION['name'])): ?>
+                <!-- Display username and logout button if logged in -->
+                <span>Welcome, <?php echo htmlspecialchars($_SESSION['name']); ?></span>
+                <a href="./controller/logout_function.php">Logout</a>
+            <?php else: ?>
+                <!-- Display login button if not logged in -->
+                <a href="./login_register.php">Login</a>
+            <?php endif; ?>
         </div>
     </nav>
 
