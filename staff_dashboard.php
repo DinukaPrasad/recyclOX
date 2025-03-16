@@ -54,7 +54,112 @@ $dealsQuery = $con->query("
 ");
 $allDeals = $dealsQuery->fetch_all(MYSQLI_ASSOC);
 
-// staff add error
+// Fetch advertisement details
+$advertisementsQuery = $con->query("
+    SELECT 
+        a.ad_id, 
+        a.seller_id, 
+        gc.category_name,
+        a.weight, 
+        a.description, 
+        a.status, 
+        a.created_at, 
+        a.updated_at, 
+        u.first_name AS seller_name
+    FROM Advertisements a
+    JOIN Users u ON a.seller_id = u.user_id
+    JOIN GarbageCategory gc ON a.category_id = gc.category_id
+");
+$advertisements = $advertisementsQuery->fetch_all(MYSQLI_ASSOC);
+
+// Fetch users for the current page
+$usersQuery = $con->query("
+    SELECT 
+        user_id,
+        first_name,
+        last_name,
+        email,
+        address,
+        phone_number,
+        role,
+        status,
+        created_at
+    FROM users
+");
+$users = $usersQuery->fetch_all(MYSQLI_ASSOC);
+
+// Fetch all garbage categories
+$garbageCategoriesQuery = $con->query("
+    SELECT 
+        category_id,
+        category_name,
+        created_at,
+        updated_at
+    FROM garbagecategory
+");
+$garbageCategories = $garbageCategoriesQuery->fetch_all(MYSQLI_ASSOC);
+
+// Fetch all garbage schedules
+$schedulesQuery = $con->query("
+    SELECT 
+        schedule_id,
+        location,
+        collection_date,
+        collection_time
+    FROM garbagecollectionschedule
+");
+$schedules = $schedulesQuery->fetch_all(MYSQLI_ASSOC);
+
+// Fetch all garbage ratings with buyer name and garbage category name
+$garbageRatingsQuery = $con->query("
+    SELECT 
+        gr.buyer_id,
+        u.first_name AS buyer_name,  -- Fetch buyer name
+        gr.category_id,
+        gc.category_name,           -- Fetch garbage category name
+        gr.price_per_kg,
+        gr.created_at,
+        gr.updated_at
+    FROM GarbageRatings gr
+    JOIN Users u ON gr.buyer_id = u.user_id  -- Join Users table
+    JOIN GarbageCategory gc ON gr.category_id = gc.category_id  -- Join GarbageCategory table
+");
+$garbageRatings = $garbageRatingsQuery->fetch_all(MYSQLI_ASSOC);
+
+// Fetch all user ratings (feedback) with user names
+$userRatingsQuery = $con->query("
+    SELECT 
+        f.feedback_id,
+        f.deal_id,
+        f.from_user_id,
+        fu.first_name AS from_user_name,  -- Fetch from user name
+        f.to_user_id,
+        tu.first_name AS to_user_name,    -- Fetch to user name
+        f.rating,
+        f.comment,
+        f.created_at
+    FROM Feedback f
+    JOIN Users fu ON f.from_user_id = fu.user_id  -- Join Users table for from_user
+    JOIN Users tu ON f.to_user_id = tu.user_id    -- Join Users table for to_user
+");
+$userRatings = $userRatingsQuery->fetch_all(MYSQLI_ASSOC);
+
+// Fetch all notifications with user names
+$notificationsQuery = $con->query("
+    SELECT 
+        n.notification_id,
+        n.user_id,
+        u.first_name AS user_name,  
+        n.message,
+        n.status,
+        n.created_at
+    FROM Notifications n
+    JOIN Users u ON n.user_id = u.user_id  -- Join Users table
+");
+$notifications = $notificationsQuery->fetch_all(MYSQLI_ASSOC);
+
+
+// Staff add error
 $errors = $_SESSION['staff_error'] ?? '';
 
 $userName = $_SESSION['name'];
