@@ -164,7 +164,8 @@ $errors = $_SESSION['staff_error'] ?? '';
 
 $userName = $_SESSION['name'];
 
-$loggedUser = $_SESSION['role'];
+$_SESSION['role'] = "staff";
+
 ?>
 
 <!DOCTYPE html>
@@ -175,13 +176,19 @@ $loggedUser = $_SESSION['role'];
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="./asset/css/admin_dash.css">
     <link rel="stylesheet" href="./asset/css/searchbar.css">
+
+    <script>
+        // Pass the logged-in user's role to JavaScript
+        const loggedUserRole = "<?php echo $_SESSION['role']; ?>";
+        console.log("Logged User Role (PHP to JS):", loggedUserRole); // Debugging
+    </script>
 </head>
 <body>
     <div class="dashboard">
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="logo">
-                <h2>RecyclOX <?php echo $loggedUser; ?> Dashboard</h2>
+                <h2>RecyclOX Staff Dashboard</h2>
             </div>
             <ul class="nav-links">
                 <li><a href="#" data-target="dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
@@ -743,7 +750,7 @@ $loggedUser = $_SESSION['role'];
     <script src="./asset/js/admin_dash.js"></script>
     <script src="./asset/js/deal_search.js"></script>
     <script src="./asset/js/adds_search.js"></script>
-    <script src="./asset/js/users_search.js"></script>
+    <script src="./asset/js/user_search_staff.js"></script>
     <script src="./asset/js/garbage_rating_search.js"></script>
     <script src="./asset/js/feedback_search.js"></script>
     <script src="./asset/js/msg_search.js"></script>
