@@ -56,10 +56,6 @@ if (!empty($advertisements)) {
             <td>" . htmlspecialchars($ad['status']) . "</td>
             <td>" . htmlspecialchars($ad['created_at']) . "</td>
             <td>" . htmlspecialchars($ad['updated_at']) . "</td>
-            <td>
-                <a href='./controller/edit_advertisement.php?id=" . $ad['ad_id'] . "'>Edit</a> |
-                <a href='./controller/delete_advertisement.php?id=" . $ad['ad_id'] . "' onclick='return confirm(\"Are you sure you want to delete this advertisement?\");'>Delete</a>
-            </td>
         </tr>
         ";
     }
