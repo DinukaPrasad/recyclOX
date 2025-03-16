@@ -59,10 +59,6 @@ if (!empty($deals)) {
             <td>" . htmlspecialchars($deal['deal_price']) . "</td>
             <td>" . htmlspecialchars($deal['created_at']) . "</td>
             <td>" . htmlspecialchars($deal['deal_status']) . "</td>
-            <td>
-                <a href='./controller/edit_deal.php?id=" . $deal['deal_id'] . "'>Edit</a> |
-                <a href='./controller/delete_deal.php?id=" . $deal['deal_id'] . "' onclick='return confirm(\"Are you sure you want to delete this deal?\");'>Delete</a>
-            </td>
         </tr>
         ";
     }
