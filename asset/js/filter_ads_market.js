@@ -25,7 +25,7 @@ function filterAds() {
                             <h3>${ad.description}</h3>
                             <p><strong>Category:</strong> ${ad.category_name}</p>
                             <p><strong>Weight:</strong> ${ad.weight} kg</p>
-                            <p><strong>Location:</strong> ${ad.city_name}</p>
+                            <p><strong>Location:</strong> ${ad.city}</p>
                         </div>`;
                 });
             }

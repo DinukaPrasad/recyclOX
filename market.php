@@ -62,10 +62,6 @@ $con->close();
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="logo">RecyclOX Marketplace</div>
-        <div class="search-bar">
-            <input type="text" id="search" placeholder="Search for products...">
-            <button onclick="filterAds()">Search</button>
-        </div>
         <div class="nav-links">
             <a href="./index.php">Home</a>
             <a href="./login_register.php">Login</a>
@@ -114,8 +110,6 @@ $con->close();
                     <label><input type="checkbox" name="weight[]" value="100-200"> 100 - 200 kg</label>
                     <label><input type="checkbox" name="weight[]" value="200+"> 200+ kg</label>
                 </div>
-
-                <button type="button" onclick="filterAds()">Apply Filters</button>
             </form>
         </aside>
 
