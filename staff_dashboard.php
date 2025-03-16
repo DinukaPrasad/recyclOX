@@ -661,40 +661,6 @@ $_SESSION['role'] = "staff";
 
             <!-- Notifications Content -->
             <div id="notifications-content" class="content-section">
-                <h2>Notifications</h2>
-
-                <!-- Send Notifications Form -->
-                <div class="send-notifications">
-                    <h3>Send Notification</h3>
-                    <form method="POST" action="./controller/send_notification.php">
-                        <!-- Recipient Type Dropdown -->
-                        <select name="recipient_type" id="recipientType" onchange="toggleUserDropdown()" required>
-                            <option value="">Select Recipient Type</option>
-                            <option value="all_users">All Users</option>
-                            <option value="all_staff">All Staff</option>
-                            <option value="specific_user">Specific User</option>
-                        </select>
-
-                        <!-- User Selection Dropdown (Hidden by Default) -->
-                        <select name="user_id" id="userDropdown" style="display: none;">
-                            <option value="">Select User</option>
-                            <?php
-                            // Fetch all users for the dropdown
-                            $usersQuery = $con->query("SELECT user_id, first_name, last_name FROM Users");
-                            while ($user = $usersQuery->fetch_assoc()) {
-                                echo "<option value='" . htmlspecialchars($user['user_id']) . "'>" . htmlspecialchars($user['first_name'] . " " . $user['last_name']) . "</option>";
-                            }
-                            ?>
-                        </select>
-
-                        <!-- Notification Message -->
-                        <textarea name="message" placeholder="Enter notification message..." required></textarea>
-
-                        <!-- Submit Button -->
-                        <button type="submit">Send Notification</button>
-                    </form>
-                </div>
-
                 <!-- Notifications Table -->
                 <div class="all-notifications">
                     <h3>All Notifications</h3>
