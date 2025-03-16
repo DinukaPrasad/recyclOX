@@ -100,7 +100,6 @@ $con->close();
                             <h3>' . htmlspecialchars($ad['description']) . '</h3>
                             <p><strong>Category:</strong> ' . htmlspecialchars($ad['category_id']) . '</p>
                             <p><strong>Weight:</strong> ' . htmlspecialchars($ad['weight']) . ' kg</p>
-                            <p><strong>Price:</strong> $' . htmlspecialchars($ad['price']) . '</p>
                             <p><strong>Status:</strong> ' . htmlspecialchars($ad['status']) . '</p>
                             <p><strong>Posted On:</strong> ' . htmlspecialchars($ad['created_at']) . '</p>
                         </div>';

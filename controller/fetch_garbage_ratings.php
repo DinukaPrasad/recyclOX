@@ -3,6 +3,7 @@ require_once('../config/db_connection.php');
 
 // Get search and sorting parameters
 $search = isset($_GET['search']) ? $_GET['search'] : '';
+$category = isset($_GET['category']) ? $_GET['category'] : '';
 $sort = isset($_GET['sort']) ? $_GET['sort'] : '';
 
 // Build the SQL query
@@ -29,6 +30,11 @@ if (!empty($search)) {
     )";
 }
 
+// Add category filter
+if (!empty($category)) {
+    $query .= " AND gc.category_name = '$category'";
+}
+
 // Add sorting
 if ($sort === 'highest') {
     $query .= " ORDER BY gr.price_per_kg DESC";
@@ -48,10 +54,6 @@ if (!empty($ratings)) {
             <td>" . htmlspecialchars($rating['price_per_kg']) . "</td>
             <td>" . htmlspecialchars($rating['created_at']) . "</td>
             <td>" . htmlspecialchars($rating['updated_at']) . "</td>
-            <td>
-                <a href='./controller/edit_garbage_rating.php?buyer_id=" . $rating['buyer_id'] . "&category_id=" . $rating['category_id'] . "'>Edit</a> |
-                <a href='./controller/delete_garbage_rating.php?buyer_id=" . $rating['buyer_id'] . "&category_id=" . $rating['category_id'] . "' onclick='return confirm(\"Are you sure you want to delete this rating?\");'>Delete</a>
-            </td>
         </tr>
         ";
     }

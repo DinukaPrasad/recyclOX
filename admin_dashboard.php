@@ -149,7 +149,7 @@ $notificationsQuery = $con->query("
     SELECT 
         n.notification_id,
         n.user_id,
-        u.first_name AS user_name,  -- Fetch user name
+        u.first_name AS user_name,  
         n.message,
         n.status,
         n.created_at
@@ -312,8 +312,9 @@ $userName = $_SESSION['name'];
                     <!-- Add New Staff Member Form -->
                     <div class="add-staff">
                         <h3>Add New Staff Member</h3>
-                        <?php if (isset($errors)): ?>
-                            <p><?php echo $errors; ?></p>
+                        <?php if (isset($_SESSION['staff_error'])): ?>
+                            <p><?php echo $_SESSION['staff_error']; ?></p>
+                            <?php unset($_SESSION['staff_error']); // Clear the error message after displaying ?>
                         <?php endif; ?>
                         <form method="POST" action="./controller/staff_add_function.php">
                             <input type="text" id="staff-first-name" name="first_name" placeholder="First Name:" required>
@@ -328,7 +329,8 @@ $userName = $_SESSION['name'];
                                 <option value="staff">Staff</option>
                             </select>
 
-                            <button type="submit">Add Staff</button>
+                            <!-- Add a submit button with the name "add-staff" -->
+                            <button type="submit" name="add-staff">Add Staff</button>
                         </form>
                     </div>
                 </div>
@@ -392,7 +394,6 @@ $userName = $_SESSION['name'];
                     </table>
                 </div>
             </div>
-
 
             <!-- Advertisements Content -->
             <div id="advertisements-content" class="content-section">
@@ -575,7 +576,8 @@ $userName = $_SESSION['name'];
                             <?php endif; ?>
                         </tbody>
                     </table>
-                </div>    
+                </div>
+            </div>    
 
             <div id="schedule-content" class="content-section">
                 <h2>Garbage Collection Schedules</h2>
@@ -615,13 +617,28 @@ $userName = $_SESSION['name'];
                 </div>
             </div>
 
-            <!-- Garbage Ratings Content -->
+            <!-- Garbage Ratings Content -->            
             <div id="ratings-content" class="content-section">
                 <h2>Garbage Ratings</h2>
-                <!-- Search and Sorting -->
+                <!-- Search, Dropdown, and Sort Button -->
                 <div class="filters">
-                    <input type="text" id="ratingSearchInput" placeholder="Search by User Name or Garbage Category..." onkeyup="filterGarbageRatings()">
-                    <button onclick="sortGarbageRatings()">Sort by Highest Price</button>
+                    <!-- Search Bar -->
+                    <input type="text" id="ratingSearchInput" placeholder="Search by Buyer or Category..." onkeyup="filterGarbageRatings()">
+                    
+                    <!-- Dropdown for Categories -->
+                    <select id="categoryFilter" onchange="filterGarbageRatings()">
+                        <option value="">All Categories</option>
+                        <?php
+                        // Fetch all categories for the dropdown
+                        $categoriesQuery = $con->query("SELECT category_name FROM GarbageCategory");
+                        while ($category = $categoriesQuery->fetch_assoc()) {
+                            echo "<option value='" . htmlspecialchars($category['category_name']) . "'>" . htmlspecialchars($category['category_name']) . "</option>";
+                        }
+                        ?>
+                    </select>
+                    
+                    <!-- Sort Button -->
+                    <button onclick="sortGarbageRatings()">Sort by Price (High to Low)</button>
                 </div>
 
                 <!-- Garbage Ratings Table -->
@@ -635,7 +652,6 @@ $userName = $_SESSION['name'];
                                 <th>Price Per Kg ($)</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody id="garbageRatingsTableBody">
@@ -647,15 +663,11 @@ $userName = $_SESSION['name'];
                                         <td><?= htmlspecialchars($rating['price_per_kg']); ?></td>
                                         <td><?= htmlspecialchars($rating['created_at']); ?></td>
                                         <td><?= htmlspecialchars($rating['updated_at']); ?></td>
-                                        <td>
-                                            <a href="./controller/edit_garbage_rating.php?buyer_id=<?= $rating['buyer_id']; ?>&category_id=<?= $rating['category_id']; ?>">Edit</a> |
-                                            <a href="./controller/delete_garbage_rating.php?buyer_id=<?= $rating['buyer_id']; ?>&category_id=<?= $rating['category_id']; ?>" onclick="return confirm('Are you sure you want to delete this rating?');">Delete</a>
-                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="6">No garbage ratings found.</td>
+                                    <td colspan="5">No garbage ratings found.</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>
@@ -692,7 +704,7 @@ $userName = $_SESSION['name'];
                                 <th>Rating</th>
                                 <th>Comment</th>
                                 <th>Created At</th>
-                                <th>Action</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="userRatingsTableBody">
@@ -707,8 +719,7 @@ $userName = $_SESSION['name'];
                                         <td><?= htmlspecialchars($rating['comment']); ?></td>
                                         <td><?= htmlspecialchars($rating['created_at']); ?></td>
                                         <td>
-                                            <a href="./controller/edit_user_rating.php?id=<?= $rating['feedback_id']; ?>">Edit</a> |
-                                            <a href="./controller/delete_user_rating.php?id=<?= $rating['feedback_id']; ?>" onclick="return confirm('Are you sure you want to delete this rating?');">Delete</a>
+                                            <a href="./controller/user_feedback_delete.php?id=<?= $rating['feedback_id']; ?>" onclick="return confirm('Are you sure you want to delete this rating?');">Delete</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -725,19 +736,52 @@ $userName = $_SESSION['name'];
             <!-- Notifications Content -->
             <div id="notifications-content" class="content-section">
                 <h2>Notifications</h2>
-                <!-- Search and Filters -->
-                <div class="filters">
-                    <input type="text" id="notificationSearchInput" placeholder="Search by User Name..." onkeyup="filterNotifications()">
-                    <select id="statusFilterNotification" onchange="filterNotifications()">
-                        <option value="">All Statuses</option>
-                        <option value="unread">Unread</option>
-                        <option value="read">Read</option>
-                    </select>
+
+                <!-- Send Notifications Form -->
+                <div class="send-notifications">
+                    <h3>Send Notification</h3>
+                    <form method="POST" action="./controller/send_notification.php">
+                        <!-- Recipient Type Dropdown -->
+                        <select name="recipient_type" id="recipientType" onchange="toggleUserDropdown()" required>
+                            <option value="">Select Recipient Type</option>
+                            <option value="all_users">All Users</option>
+                            <option value="all_staff">All Staff</option>
+                            <option value="specific_user">Specific User</option>
+                        </select>
+
+                        <!-- User Selection Dropdown (Hidden by Default) -->
+                        <select name="user_id" id="userDropdown" style="display: none;">
+                            <option value="">Select User</option>
+                            <?php
+                            // Fetch all users for the dropdown
+                            $usersQuery = $con->query("SELECT user_id, first_name, last_name FROM Users");
+                            while ($user = $usersQuery->fetch_assoc()) {
+                                echo "<option value='" . htmlspecialchars($user['user_id']) . "'>" . htmlspecialchars($user['first_name'] . " " . $user['last_name']) . "</option>";
+                            }
+                            ?>
+                        </select>
+
+                        <!-- Notification Message -->
+                        <textarea name="message" placeholder="Enter notification message..." required></textarea>
+
+                        <!-- Submit Button -->
+                        <button type="submit">Send Notification</button>
+                    </form>
                 </div>
 
                 <!-- Notifications Table -->
                 <div class="all-notifications">
                     <h3>All Notifications</h3>
+
+                    <!-- Search and Filters -->
+                    <div class="filters">
+                        <input type="text" id="notificationSearchInput" placeholder="Search by User Name..." onkeyup="filterNotifications()">
+                        <select id="statusFilterNotification" onchange="filterNotifications()">
+                            <option value="">All Statuses</option>
+                            <option value="unread">Unread</option>
+                            <option value="read">Read</option>
+                        </select>
+                    </div>
                     <table>
                         <thead>
                             <tr>
@@ -759,7 +803,6 @@ $userName = $_SESSION['name'];
                                         <td><?= htmlspecialchars($notification['status']); ?></td>
                                         <td><?= htmlspecialchars($notification['created_at']); ?></td>
                                         <td>
-                                            <a href="./controller/edit_notification.php?id=<?= $notification['notification_id']; ?>">Edit</a> |
                                             <a href="./controller/delete_notification.php?id=<?= $notification['notification_id']; ?>" onclick="return confirm('Are you sure you want to delete this notification?');">Delete</a>
                                         </td>
                                     </tr>
@@ -773,207 +816,11 @@ $userName = $_SESSION['name'];
                     </table>
                 </div>
             </div>
-            </div>
 
-            <div id="schedule-content" class="content-section">
-                <h2>Garbage Collection Schedules</h2>
-                <div class="all-schedules">
-                    <h3>All Schedules</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Schedule ID</th>
-                                <th>Location</th>
-                                <th>Collection Date</th>
-                                <th>Collection Date</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (!empty($schedules)): ?>
-                                <?php foreach ($schedules as $schedule): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($schedule['schedule_id']); ?></td>
-                                        <td><?= htmlspecialchars($schedule['location']); ?></td>
-                                        <td><?= htmlspecialchars($schedule['collection_date']); ?></td>
-                                        <td><?= htmlspecialchars($schedule['collection_time']); ?></td>
-                                        <td>
-                                            <a href="./controller/edit_schedule.php?id=<?= $schedule['schedule_id']; ?>">Edit</a> |
-                                            <a href="./controller/delete_schedule.php?id=<?= $schedule['schedule_id']; ?>" onclick="return confirm('Are you sure you want to delete this schedule?');">Delete</a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <tr>
-                                    <td colspan="7">No schedules found.</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Garbage Ratings Content -->
-            <div id="ratings-content" class="content-section">
-                <h2>Garbage Ratings</h2>
-                <!-- Search and Sorting -->
-                <div class="filters">
-                    <input type="text" id="ratingSearchInput" placeholder="Search by User Name or Garbage Category..." onkeyup="filterGarbageRatings()">
-                    <button onclick="sortGarbageRatings()">Sort by Highest Price</button>
-                </div>
-
-                <!-- Garbage Ratings Table -->
-                <div class="all-garbage-ratings">
-                    <h3>All Garbage Ratings</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Buyer Name</th>
-                                <th>Garbage Category</th>
-                                <th>Price Per Kg ($)</th>
-                                <th>Created At</th>
-                                <th>Updated At</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="garbageRatingsTableBody">
-                            <?php if (!empty($garbageRatings)): ?>
-                                <?php foreach ($garbageRatings as $rating): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($rating['buyer_name']); ?></td>
-                                        <td><?= htmlspecialchars($rating['category_name']); ?></td>
-                                        <td><?= htmlspecialchars($rating['price_per_kg']); ?></td>
-                                        <td><?= htmlspecialchars($rating['created_at']); ?></td>
-                                        <td><?= htmlspecialchars($rating['updated_at']); ?></td>
-                                        <td>
-                                            <a href="./controller/edit_garbage_rating.php?buyer_id=<?= $rating['buyer_id']; ?>&category_id=<?= $rating['category_id']; ?>">Edit</a> |
-                                            <a href="./controller/delete_garbage_rating.php?buyer_id=<?= $rating['buyer_id']; ?>&category_id=<?= $rating['category_id']; ?>" onclick="return confirm('Are you sure you want to delete this rating?');">Delete</a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <tr>
-                                    <td colspan="6">No garbage ratings found.</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- User Ratings Content -->
-            <div id="userRatings-content" class="content-section">
-                <h2>User Ratings</h2>
-                <!-- Search and Filters -->
-                <div class="filters">
-                    <input type="text" id="userRatingSearchInput" placeholder="Search by User Name..." onkeyup="filterUserRatings()">
-                    <select id="ratingFilter" onchange="filterUserRatings()">
-                        <option value="">All Ratings</option>
-                        <option value="1">1 Star</option>
-                        <option value="2">2 Stars</option>
-                        <option value="3">3 Stars</option>
-                        <option value="4">4 Stars</option>
-                        <option value="5">5 Stars</option>
-                    </select>
-                </div>
-
-                <!-- User Ratings Table -->
-                <div class="all-user-ratings">
-                    <h3>All User Ratings</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Feedback ID</th>
-                                <th>Deal ID</th>
-                                <th>From User (Seller)</th>
-                                <th>To User (Buyer)</th>
-                                <th>Rating</th>
-                                <th>Comment</th>
-                                <th>Created At</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="userRatingsTableBody">
-                            <?php if (!empty($userRatings)): ?>
-                                <?php foreach ($userRatings as $rating): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($rating['feedback_id']); ?></td>
-                                        <td><?= htmlspecialchars($rating['deal_id']); ?></td>
-                                        <td><?= htmlspecialchars($rating['from_user_name']); ?></td>
-                                        <td><?= htmlspecialchars($rating['to_user_name']); ?></td>
-                                        <td><?= htmlspecialchars($rating['rating']); ?></td>
-                                        <td><?= htmlspecialchars($rating['comment']); ?></td>
-                                        <td><?= htmlspecialchars($rating['created_at']); ?></td>
-                                        <td>
-                                            <a href="./controller/edit_user_rating.php?id=<?= $rating['feedback_id']; ?>">Edit</a> |
-                                            <a href="./controller/delete_user_rating.php?id=<?= $rating['feedback_id']; ?>" onclick="return confirm('Are you sure you want to delete this rating?');">Delete</a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <tr>
-                                    <td colspan="8">No user ratings found.</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Notifications Content -->
-            <div id="notifications-content" class="content-section">
-                <h2>Notifications</h2>
-                <!-- Search and Filters -->
-                <div class="filters">
-                    <input type="text" id="notificationSearchInput" placeholder="Search by User Name..." onkeyup="filterNotifications()">
-                    <select id="statusFilterNotification" onchange="filterNotifications()">
-                        <option value="">All Statuses</option>
-                        <option value="unread">Unread</option>
-                        <option value="read">Read</option>
-                    </select>
-                </div>
-
-                <!-- Notifications Table -->
-                <div class="all-notifications">
-                    <h3>All Notifications</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Notification ID</th>
-                                <th>User Name</th>
-                                <th>Message</th>
-                                <th>Status</th>
-                                <th>Created At</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="notificationsTableBody">
-                            <?php if (!empty($notifications)): ?>
-                                <?php foreach ($notifications as $notification): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($notification['notification_id']); ?></td>
-                                        <td><?= htmlspecialchars($notification['user_name']); ?></td>
-                                        <td><?= htmlspecialchars($notification['message']); ?></td>
-                                        <td><?= htmlspecialchars($notification['status']); ?></td>
-                                        <td><?= htmlspecialchars($notification['created_at']); ?></td>
-                                        <td>
-                                            <a href="./controller/edit_notification.php?id=<?= $notification['notification_id']; ?>">Edit</a> |
-                                            <a href="./controller/delete_notification.php?id=<?= $notification['notification_id']; ?>" onclick="return confirm('Are you sure you want to delete this notification?');">Delete</a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <tr>
-                                    <td colspan="6">No notifications found.</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
         </div>
-    </div>
 
+             
+      
     <script src="./asset/js/admin_dash.js"></script>
     <script src="./asset/js/deal_search.js"></script>
     <script src="./asset/js/adds_search.js"></script>
