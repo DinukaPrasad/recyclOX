@@ -124,12 +124,12 @@ $con->close();
                 } else {
                     foreach ($advertisements as $ad) {
                         echo '
-                        <div class="product-card">
+                        <a href="./view_ad.php?ad_id=' . $ad['ad_id'] . '" class="product-card">
                             <h3>' . htmlspecialchars($ad['description']) . '</h3>
                             <p><strong>Category:</strong> ' . htmlspecialchars($ad['category_name']) . '</p>
                             <p><strong>Weight:</strong> ' . htmlspecialchars($ad['weight']) . ' kg</p>
                             <p><strong>Location:</strong> ' . htmlspecialchars($ad['city']) . '</p>
-                        </div>';
+                        </a>';
                     }
                 }
                 ?>

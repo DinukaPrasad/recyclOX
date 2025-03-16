@@ -1,0 +1,22 @@
+/* Advertisement Details Section */
+.ad-details {
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ad-details h2 {
+    margin-top: 0;
+    color: #2E8B57; /* Green */
+}
+
+.ad-details p {
+    margin: 10px 0;
+    color: #555; /* Gray */
+    font-size: 16px;
+}

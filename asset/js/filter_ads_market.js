@@ -20,13 +20,17 @@ function filterAds() {
                 productGrid.innerHTML = '<p>No advertisements found.</p>';
             } else {
                 data.forEach(ad => {
-                    productGrid.innerHTML += `
-                        <div class="product-card">
-                            <h3>${ad.description}</h3>
-                            <p><strong>Category:</strong> ${ad.category_name}</p>
-                            <p><strong>Weight:</strong> ${ad.weight} kg</p>
-                            <p><strong>Location:</strong> ${ad.city}</p>
-                        </div>`;
+                    // Create an anchor element for each advertisement
+                    const adElement = document.createElement('a');
+                    adElement.href = `./view_ad.php?ad_id=${ad.ad_id}`;
+                    adElement.className = 'product-card';
+                    adElement.innerHTML = `
+                        <h3>${ad.description}</h3>
+                        <p><strong>Category:</strong> ${ad.category_name}</p>
+                        <p><strong>Weight:</strong> ${ad.weight} kg</p>
+                        <p><strong>Location:</strong> ${ad.city}</p>
+                    `;
+                    productGrid.appendChild(adElement);
                 });
             }
         })
