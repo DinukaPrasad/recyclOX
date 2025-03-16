@@ -2,10 +2,11 @@
 // Include the database connection file
 require_once('./config/db_connection.php');
 
-// Fetch all active advertisements with city names
-$sql = "SELECT a.*, l.city 
+// Fetch all active advertisements with city names and category names
+$sql = "SELECT a.*, l.city, gc.category_name 
         FROM advertisements a
         JOIN location l ON a.postal_code = l.postal_code
+        JOIN garbagecategory gc ON a.category_id = gc.category_id
         WHERE a.status = 'active'";
 $result = $con->query($sql);
 
@@ -131,7 +132,7 @@ $con->close();
                         echo '
                         <div class="product-card">
                             <h3>' . htmlspecialchars($ad['description']) . '</h3>
-                            <p><strong>Category:</strong> ' . htmlspecialchars($ad['category_id']) . '</p>
+                            <p><strong>Category:</strong> ' . htmlspecialchars($ad['category_name']) . '</p>
                             <p><strong>Weight:</strong> ' . htmlspecialchars($ad['weight']) . ' kg</p>
                             <p><strong>Location:</strong> ' . htmlspecialchars($ad['city']) . '</p>
                         </div>';

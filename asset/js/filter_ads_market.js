@@ -23,9 +23,9 @@ function filterAds() {
                     productGrid.innerHTML += `
                         <div class="product-card">
                             <h3>${ad.description}</h3>
-                            <p><strong>Category ID:</strong> ${ad.category_id}</p>
+                            <p><strong>Category:</strong> ${ad.category_name}</p>
                             <p><strong>Weight:</strong> ${ad.weight} kg</p>
-                            <p><strong>Location:</strong> ${ad.city}</p>
+                            <p><strong>Location:</strong> ${ad.city_name}</p>
                         </div>`;
                 });
             }

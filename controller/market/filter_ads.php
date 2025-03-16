@@ -8,9 +8,10 @@ $postalCodes = isset($_GET['postal_code']) ? $_GET['postal_code'] : [];
 $weights = isset($_GET['weight']) ? $_GET['weight'] : [];
 
 // Base SQL query
-$sql = "SELECT a.*, l.city 
+$sql = "SELECT a.*, l.city, gc.category_name 
         FROM advertisements a
         JOIN location l ON a.postal_code = l.postal_code
+        JOIN garbagecategory gc ON a.category_id = gc.category_id
         WHERE a.status = 'active'";
 
 // Apply filters
