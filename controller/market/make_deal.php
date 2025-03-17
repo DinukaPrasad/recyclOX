@@ -11,7 +11,7 @@ $_SESSION['make_deal_error'] = null;
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['make_deal_error'] = "You must be logged in to make a deal.";
-    header("Location: view_ad.php?ad_id=" . $_GET['ad_id']);
+    header("Location: ../../view_ad.php?ad_id=" . $_GET['ad_id']);
     exit();
 }
 
