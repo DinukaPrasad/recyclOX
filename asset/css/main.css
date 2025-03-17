@@ -18,8 +18,8 @@ html {
 }
 
 body{
-    background: var(--bg-color);
-    color: var(--text-color);
+    background: var(--text-color);
+    color: var(--bg-color);
 }
 
 section{
