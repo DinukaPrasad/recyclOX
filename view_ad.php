@@ -50,6 +50,8 @@ $con->close();
     <title>View Advertisement - RecyclOX Marketplace</title>
     <link rel="stylesheet" href="./asset/css/view_ad.css">
     <link rel="stylesheet" href="./asset/css/market.css">
+    <link rel="stylesheet" href="./asset/css/main.css">
+    <link rel="stylesheet" href="./asset/css/components.css">
 </head>
 <body>
     <!-- Navigation Bar -->

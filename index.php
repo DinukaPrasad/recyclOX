@@ -55,32 +55,59 @@
 
     <!-- about us section -->
     <section class="aboutus" id="aboutUs">
-        <h1 class="heading">About us</h1>
+    <h1 class="heading">About Us</h1>
+    <p class="subheading">Empowering communities with sustainable waste management solutions.</p>
 
-        <div class="feature">
-            <i class="fas fa-recycle"></i>
-            <h2>Buy & Sell Garbage</h2>
-            <p>Easily trade recyclable materials with verified buyers and sellers.</p>
-        </div>
-        <div class="feature">
-            <i class="fas fa-calendar-alt"></i>
-            <h2>Collection Schedules</h2>
-            <p>Never miss a garbage collection day with our schedule tracker.</p>
-        </div>
-        <div class="feature">
-            <i class="fas fa-leaf"></i>
-            <h2>Eco-Friendly</h2>
-            <p>Contribute to a cleaner environment by recycling waste.</p>
-        </div>
+    <div class="feature">
+        <i class="fas fa-recycle"></i>
+        <h2>Buy & Sell Garbage</h2>
+        <p>Our platform connects individuals and businesses looking to trade recyclable materials. Verified buyers and sellers ensure a secure and reliable exchange process, reducing waste and promoting sustainability.</p>
+    </div>
 
-    </section>
+    <div class="feature">
+        <i class="fas fa-calendar-alt"></i>
+        <h2>Collection Schedules</h2>
+        <p>Stay updated with garbage collection schedules in your area. Our automated notifications and reminders help you never miss a collection day, making waste disposal hassle-free.</p>
+    </div>
 
-    <!-- services section -->
-    <section class="aboutus" id="services">
-        <h1 class="heading">Our Services</h1>
+    <div class="feature">
+        <i class="fas fa-leaf"></i>
+        <h2>Eco-Friendly</h2>
+        <p>We encourage responsible waste management by promoting recycling initiatives. Every small effort contributes to reducing pollution and preserving natural resources for future generations.</p>
+    </div>
+    
+    <div class="cta">
+        <p>Be a part of the change. Join us today and contribute to a cleaner, greener future!</p>
+        <a href="login_register.php" class="btn-1">Login</a>
+    </div>
+</section>
 
 
-    </section>
+    <!-- Services Section -->
+<section class="aboutus" id="services">
+    <h1 class="heading">Our Services</h1>
+    <p class="subheading">Dedicated to enhancing waste management practices and fostering a greener future.</p>
+
+    <div class="service">
+        <i class="fas fa-recycle"></i>
+        <h2>Buy & Sell Garbage</h2>
+        <p>Our platform allows individuals and businesses to easily trade recyclable materials. You can connect with verified buyers and sellers, promoting sustainable practices while reducing waste.</p>
+    </div>
+
+    <div class="service">
+        <i class="fas fa-calendar-alt"></i>
+        <h2>Collection Schedules by Municipal Councils</h2>
+        <p>Stay on top of your local garbage collection dates with our municipal council-powered schedule tracker. Receive timely reminders so you never miss a collection day, ensuring efficient waste management.</p>
+    </div>
+
+    <div class="service">
+        <i class="fas fa-leaf"></i>
+        <h2>Eco-Friendly Practices</h2>
+        <p>Join our efforts in reducing environmental impact by participating in recycling and proper waste disposal. Our platform helps promote a cleaner, greener environment for future generations.</p>
+    </div>
+
+</section>
+
 
     <footer>
         <div class="footer-content">

@@ -114,15 +114,15 @@ $schedules = $schedulesQuery->fetch_all(MYSQLI_ASSOC);
 $garbageRatingsQuery = $con->query("
     SELECT 
         gr.buyer_id,
-        u.first_name AS buyer_name,  -- Fetch buyer name
+        u.first_name AS buyer_name,  
         gr.category_id,
-        gc.category_name,           -- Fetch garbage category name
+        gc.category_name,           
         gr.price_per_kg,
         gr.created_at,
         gr.updated_at
     FROM GarbageRatings gr
-    JOIN Users u ON gr.buyer_id = u.user_id  -- Join Users table
-    JOIN GarbageCategory gc ON gr.category_id = gc.category_id  -- Join GarbageCategory table
+    JOIN Users u ON gr.buyer_id = u.user_id 
+    JOIN GarbageCategory gc ON gr.category_id = gc.category_id  
 ");
 $garbageRatings = $garbageRatingsQuery->fetch_all(MYSQLI_ASSOC);
 
@@ -132,15 +132,15 @@ $userRatingsQuery = $con->query("
         f.feedback_id,
         f.deal_id,
         f.from_user_id,
-        fu.first_name AS from_user_name,  -- Fetch from user name
+        fu.first_name AS from_user_name,
         f.to_user_id,
-        tu.first_name AS to_user_name,    -- Fetch to user name
+        tu.first_name AS to_user_name, 
         f.rating,
         f.comment,
         f.created_at
     FROM Feedback f
-    JOIN Users fu ON f.from_user_id = fu.user_id  -- Join Users table for from_user
-    JOIN Users tu ON f.to_user_id = tu.user_id    -- Join Users table for to_user
+    JOIN Users fu ON f.from_user_id = fu.user_id  
+    JOIN Users tu ON f.to_user_id = tu.user_id    
 ");
 $userRatings = $userRatingsQuery->fetch_all(MYSQLI_ASSOC);
 
@@ -172,7 +172,7 @@ $userName = $_SESSION['name'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="./asset/css/admin_dash.css">
-    <link rel="stylesheet" href="./asset/css/searchbar.css">
+    <!-- <link rel="stylesheet" href="./asset/css/components.css"> -->
 </head>
 <body>
     <div class="dashboard">
@@ -224,7 +224,7 @@ $userName = $_SESSION['name'];
                 <h2>Dashboard Overview</h2>
 
                 <!-- Pending Deals Table -->
-                <div class="pending-appointments">
+                <div class="pending-deal">
                     <h3>Pending Deals</h3>
                     <table>
                         <thead>
@@ -534,7 +534,7 @@ $userName = $_SESSION['name'];
                 <h2>Garbage Categories</h2>
 
                 <!-- Add New Category Form -->
-                <div class="add-new-cat">
+                <div class="add-new-cat filters">
                     <h3>Add New Category</h3>
                     <form method="POST" action="./controller/add_garbage_cat.php">
                         <input type="text" id="category-name" name="category_name" placeholder="Enter Category Name" required>

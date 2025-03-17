@@ -1,51 +1,71 @@
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
+@import url(color.css);
+
+* {
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    font-family: -apple-system, sans-serif;
+}
+
+.m-body {
+    background: url('../../image/hero-bg.jpg') no-repeat center center/cover;
 }
 
 /* Navigation Bar */
 .navbar {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #2E8B57; /* Green */
-    padding: 10px 20px;
-    color: white;
+    padding: 1rem 5%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar .logo {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.navbar .search-bar input {
-    padding: 8px;
-    border: none;
-    border-radius: 4px;
-    width: 300px;
-}
-
-.navbar .search-bar button {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    background-color: #228B22; /* Darker green */
-    color: white;
+    font-size: 3rem;
+    color: var(--bg-color);
+    font-weight: 800;
     cursor: pointer;
+    transition: 0.3s ease-in-out;
 }
 
-.navbar .nav-links a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
+.navbar .nav-links a,
+.navbar .middle-links a {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--bg-color);
+    margin-left: 4rem;
+    transition: all 0.5s ease;
+}
+
+.navbar .middle-links a:hover {
+    border-bottom: 3px solid var(--main-color);
 }
 
 /* Container for Sidebar and Main Content */
 .container {
     display: flex;
+    margin-top: 10vh;
+    padding: 2rem 5%;
+    gap: 20px;
+}
+
+#advertisements-section {
+    display: flex;
+    padding: 2rem 5%;
+    gap: 20px;
+    width: 100%;
+}
+
+#buyers-section {
+    padding: 2rem 5%;
+    gap: 20px;
+    width: 100%;
 }
 
 /* Sidebar */
@@ -54,11 +74,14 @@ body {
     background-color: #fff;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    flex-shrink: 0;
 }
 
 .sidebar h3 {
     margin-bottom: 20px;
-    color: #2E8B57; /* Green */
+    color: var(--main-color);
+    font-size: 20px;
 }
 
 .filter-section {
@@ -68,13 +91,14 @@ body {
 .filter-section h4 {
     margin-bottom: 10px;
     font-size: 16px;
-    color: #2E8B57; /* Green */
+    color: var(--main-color);
 }
 
 .filter-section label {
     display: block;
     margin-bottom: 8px;
     font-size: 14px;
+    color: #555;
 }
 
 .filter-section input {
@@ -83,66 +107,132 @@ body {
 
 /* Main Content */
 main {
+    height: 70vh;
     flex: 1;
     padding: 20px;
-    text-align: center;
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
     margin-bottom: 20px;
-    color: #2E8B57; /* Green */
+    color: var(--main-color);
+    font-size: 28px;
 }
 
-
-/* Product Grid */
-.product-grid {
+/* Product Grid and Buyer Grid */
+.product-grid,
+.buyer-grid {
     display: flex;
-    gap: 2%;
+    gap: 20px;
     flex-wrap: wrap;
-    flex-direction: row;
-    align-content: start;
 }
 
-/* Product Card */
-.product-card {
+/* Product Card and Buyer Card */
+.product-card,
+.buyer-card {
     text-decoration: none;
-    width: 23.5%;
-    height: 23.5%;
-    align-self: flex-start;
+    width: calc(20% - 16px); /* 5 cards per row with gap */
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 8px;
-    padding: 20px; /* Reduced padding inside the card */
+    padding: 25px; /* Increased padding for larger cards */
     text-align: left;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Add hover effect */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 20px;
 }
 
-.product-card:hover {
-    text-decoration: none;
-    transform: translateY(-5px); /* Slight lift on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+.product-card:hover,
+.buyer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.product-card h3 {
-    margin: 0 0 8px; /* Reduced margin */
-    font-size: 18px;
-    color: #2E8B57; /* Green */
+.product-card h3,
+.buyer-card h3 {
+    margin: 0 0 8px;
+    font-size: 20px; /* Increased font size for card title */
+    color: var(--main-color);
 }
 
-.product-card p {
-    margin: 4px 0; /* Reduced margin */
-    color: #555; /* Gray */
-    font-size: 14px;
+.product-card p,
+.buyer-card p {
+    margin: 4px 0;
+    color: #555;
+    font-size: 16px; /* Increased font size for card content */
+}
+
+/* Center and Style H2 Tags */
+.highest-price-section h2,
+.all-ratings-section h2 {
+    text-align: center; /* Center the text */
+    font-size: 28px; /* Increase font size */
+    color: var(--main-color); /* Use the main color variable */
+    margin-bottom: 20px; /* Add a small gap at the bottom */
+}
+
+/* Highest Price Card */
+.highest-price-section .buyer-card {
+    background-color: #ffe169; /* Golden background */
+    border: 1px solid #ffc107; /* Golden border */
+}
+
+/* Golden Glow Edges Effect on Hover */
+.highest-price-section .buyer-card:hover {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8); /* Golden glow effect */
+    transform: translateY(-5px); /* Slight lift effect */
 }
 
 /* Footer */
 .footer {
+    font-size: 1.8rem;
     text-align: center;
-    padding: 10px;
-    background-color: #2E8B57; /* Green */
+    padding: 15px;
+    background-color: var(--main-color);
     color: white;
     position: fixed;
     bottom: 0;
     width: 100%;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.footer a {
+    color: #FFD700; /* Yellow */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #e6b800;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .product-card,
+    .buyer-card {
+        width: calc(25% - 16px); /* 4 cards per row on smaller screens */
+    }
+}
+
+@media (max-width: 992px) {
+    .product-card,
+    .buyer-card {
+        width: calc(33.33% - 16px); /* 3 cards per row on tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .product-card,
+    .buyer-card {
+        width: calc(50% - 16px); /* 2 cards per row on mobile */
+    }
+}
+
+@media (max-width: 576px) {
+    .product-card,
+    .buyer-card {
+        width: 100%; /* 1 card per row on small mobile */
+    }
 }

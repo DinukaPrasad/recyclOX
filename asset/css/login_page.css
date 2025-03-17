@@ -1,4 +1,5 @@
-*{
+/* Global Reset */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -6,25 +7,22 @@
     list-style: none;
     border: none;
     outline: none;
-    scroll-behavior:smooth;
-    font-family: -apple-system, sans-serif;
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
 }
 
-:root{
-    --bg-color: #fff;
-    --snd-bg-color: #111;
-    --text-color: #212529;
-    --main-color: #4cc9f0;
-    --Blue: #4cc9f0;
-    --Green:#00f5d4;
+/* Theme Colors */
+:root {
+    --bg-color: #f9fbe7; /* Light Yellowish White */
+    --text-color: #2e3b2d; /* Dark Green */
+    --primary-color: #4caf50; /* Green */
+    --secondary-color: #ffeb3b; /* Yellow */
+    --hover-color: #388e3c; /* Darker Green */
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-html {
-    font-size: 62.5%;
-    overflow-x: hidden;
-}
-
-body{
+/* Body Styling */
+body {
     background: var(--bg-color);
     color: var(--text-color);
     display: flex;
@@ -33,81 +31,153 @@ body{
     min-height: 100vh;
 }
 
+/* Container */
 .container {
-    margin: 0 15px;
+    width: 90%;
+    max-width: 500px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    border-top: 6px solid var(--primary-color);
 }
 
-.form_box{
+/* Form Styling */
+.form_box {
     width: 100%;
-    max-width: 450px;
-    padding: 30px;
+    padding: 25px;
     background: var(--bg-color);
     border-radius: 10px;
-    box-shadow: 0 0 10px var(--Blue);
+    box-shadow: var(--box-shadow);
     display: none;
+    border-left: 5px solid var(--secondary-color);
 }
 
-.form_box.active{
+.form_box.active {
     display: block;
 }
 
+/* Heading */
 h2 {
-    font-size: 34px;
+    font-size: 26px;
+    color: var(--primary-color);
     text-align: center;
+    font-weight: 600;
     margin-bottom: 20px;
 }
 
+/* Inputs */
 input, select {
     width: 100%;
     padding: 12px;
-    background: #eee;
-    border-radius: 6px;
-    border: none;
-    outline: none;
+    background: #ffffff;
+    border-radius: 8px;
+    border: 2px solid var(--primary-color);
     font-size: 16px;
-    color: #333;
-    margin-bottom: 20px;
+    color: var(--text-color);
+    margin-bottom: 15px;
+    transition: 0.3s;
 }
 
-button{
+input:focus, select:focus {
+    border-color: var(--hover-color);
+    box-shadow: 0 0 5px var(--primary-color);
+}
+
+/* Buttons */
+button {
     width: 100%;
     padding: 12px;
-    background: var(--main-color);
+    background: var(--primary-color);
     border-radius: 6px;
-    border: none;
     cursor: pointer;
     font-size: 16px;
-    color: var(--bg-color);
-    font-weight: 500;
-    margin-bottom: 20px;
-    transition: 0.5s;
+    color: white;
+    font-weight: bold;
+    transition: 0.4s ease-in-out;
+    text-transform: uppercase;
+    border-bottom: 4px solid var(--hover-color);
 }
 
 button:hover {
-    background: var(--Green);
+    background: var(--hover-color);
+    border-bottom: 2px solid var(--hover-color);
 }
 
+/* Links */
 p {
-    font-size: 14.5px;
+    font-size: 15px;
     text-align: center;
-    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 p a {
-    color: var(--Blue);
+    color: var(--primary-color);
     text-decoration: none;
+    font-weight: 600;
 }
 
-p a:hover{
+p a:hover {
     text-decoration: underline;
+    color: var(--hover-color);
 }
 
-.error-msg{
+/* Error Messages */
+.error-msg {
     padding: 12px;
-    background: #f8d7da;
+    background: #ffebee;
     border-radius: 6px;
     font-size: 16px;
-    color: red;
+    color: #d32f2f;
     text-align: center;
+    border: 1px solid #f44336;
     margin-bottom: 20px;
+}
+
+/* Success Messages */
+.success-msg {
+    padding: 12px;
+    background: #e8f5e9;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #2e7d32;
+    text-align: center;
+    border: 1px solid #4caf50;
+    margin-bottom: 20px;
+}
+
+/* Attractive Call to Action */
+.call-to-action {
+    background: var(--secondary-color);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--text-color);
+    margin-top: 20px;
+    border: 2px solid var(--primary-color);
+    transition: 0.3s;
+}
+
+.call-to-action:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Smooth Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form_box {
+    animation: fadeIn 0.5s ease-in-out;
 }

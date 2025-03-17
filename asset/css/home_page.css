@@ -231,3 +231,157 @@ footer {
     }
 }
 
+/* About Us Section */
+.aboutus {
+    background-color: #ffffff;
+    padding: 60px 50px;
+    text-align: center;
+}
+
+.aboutus .heading {
+    font-size: 36px;
+    color: #2d572c;
+    margin-bottom: 20px;
+}
+
+.aboutus .subheading {
+    font-size: 20px;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.aboutus .feature {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.aboutus .feature i {
+    font-size: 36px;
+    color: #2d572c;
+    margin-bottom: 10px;
+}
+
+.aboutus .feature h2 {
+    font-size: 24px;
+    color: #2d572c;
+    margin-bottom: 10px;
+}
+
+.aboutus .cta {
+    margin-top: 40px;
+}
+
+.aboutus .cta p {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.aboutus .cta .btn-1 {
+    background-color: #ffcc00;
+    padding: 15px 30px;
+    color: #333;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.aboutus .cta .btn-1:hover {
+    background-color: #f5b500;
+}
+
+/* Services Section */
+#services {
+    padding: 60px 50px;
+    background-color: #eaf2e3; /* Light green background for service section */
+}
+
+#services .heading {
+    font-size: 36px;
+    color: #2d572c;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#services .subheading {
+    font-size: 20px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+#services .service {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#services .service i {
+    font-size: 50px;
+    color: #2d572c;
+    margin-right: 20px;
+}
+
+#services .service h2 {
+    font-size: 24px;
+    color: #2d572c;
+    margin-bottom: 10px;
+}
+
+#services .service p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header .navbar {
+        display: none;
+    }
+
+    header .top-btn {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    .home-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .home-section .paragraph-container {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .home-section .calendar-section {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    #services .service {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    footer .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    footer .footer-section {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
