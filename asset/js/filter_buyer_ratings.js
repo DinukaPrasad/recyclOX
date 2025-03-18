@@ -27,7 +27,8 @@ function filterRatings() {
             } else {
                 // Display filtered ratings
                 data.forEach(rating => {
-                    const ratingElement = document.createElement('div');
+                    const ratingElement = document.createElement('a');
+                    ratingElement.href = `./view_buyer.php?buyer_id=${rating.buyer_id}`;
                     ratingElement.className = 'buyer-card';
                     ratingElement.innerHTML = `
                         <h3>${rating.buyer_name}</h3>
@@ -62,7 +63,8 @@ function loadAllRatings() {
                 buyerGrid.innerHTML = '<p>No ratings found.</p>';
             } else {
                 data.forEach(rating => {
-                    const ratingElement = document.createElement('div');
+                    const ratingElement = document.createElement('a');
+                    ratingElement.href = `./view_buyer.php?buyer_id=${rating.buyer_id}`;
                     ratingElement.className = 'buyer-card';
                     ratingElement.innerHTML = `
                         <h3>${rating.buyer_name}</h3>

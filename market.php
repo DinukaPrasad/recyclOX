@@ -1,4 +1,4 @@
-<?php
+<<?php
 // Start the session
 session_start();
 
@@ -185,27 +185,27 @@ $con->close();
                 </form>
             </aside>
 
-                <!-- Product Grid -->
-                <main>
-                    <div class="product-grid" id="product-grid">
-                        <?php
-                        // Display advertisements
-                        if (empty($advertisements)) {
-                            echo '<p>No advertisements found.</p>';
-                        } else {
-                            foreach ($advertisements as $ad) {
-                                echo '
-                                <a href="./view_ad.php?ad_id=' . $ad['ad_id'] . '" class="product-card">
-                                    <h3>' . htmlspecialchars($ad['description']) . '</h3>
-                                    <p><strong>Category:</strong> ' . htmlspecialchars($ad['category_name']) . '</p>
-                                    <p><strong>Weight:</strong> ' . htmlspecialchars($ad['weight']) . ' kg</p>
-                                    <p><strong>Location:</strong> ' . htmlspecialchars($ad['city']) . '</p>
-                                </a>';
-                            }
+            <!-- Product Grid -->
+            <main>
+                <div class="product-grid" id="product-grid">
+                    <?php
+                    // Display advertisements
+                    if (empty($advertisements)) {
+                        echo '<p>No advertisements found.</p>';
+                    } else {
+                        foreach ($advertisements as $ad) {
+                            echo '
+                            <a href="./view_ad.php?ad_id=' . $ad['ad_id'] . '" class="product-card">
+                                <h3>' . htmlspecialchars($ad['description']) . '</h3>
+                                <p><strong>Category:</strong> ' . htmlspecialchars($ad['category_name']) . '</p>
+                                <p><strong>Weight:</strong> ' . htmlspecialchars($ad['weight']) . ' kg</p>
+                                <p><strong>Location:</strong> ' . htmlspecialchars($ad['city']) . '</p>
+                            </a>';
                         }
-                        ?>
-                    </div>
-                </main>
+                    }
+                    ?>
+                </div>
+            </main>
         </div>
 
         <!-- Buyers Section -->
@@ -262,11 +262,11 @@ $con->close();
                         } else {
                             foreach ($ratings as $rating) {
                                 echo '
-                                <div class="buyer-card">
+                                <a href="./view_buyer.php?buyer_id=' . $rating['buyer_id'] . '" class="buyer-card">
                                     <h3>' . htmlspecialchars($rating['buyer_name']) . '</h3>
                                     <p><strong>Category:</strong> ' . htmlspecialchars($rating['category_name']) . '</p>
                                     <p><strong>Price per kg:</strong> ' . htmlspecialchars($rating['price_per_kg']) . '</p>
-                                </div>';
+                                </a>';
                             }
                         }
                         ?>
@@ -274,7 +274,6 @@ $con->close();
                 </div>
             </main>
         </div>
-
     </div>
 
     <!-- Footer -->
@@ -282,9 +281,8 @@ $con->close();
         <p>&copy; 2023 Marketplace. All rights reserved.</p>
     </footer>
 
- <!-- Include JavaScript for live filtering -->   
-<script src="./asset/js/filter_buyer_ratings.js"></script>
-<script src="./asset/js/market_toggle.js"></script>
- 
+    <!-- Include JavaScript for live filtering -->
+    <script src="./asset/js/filter_buyer_ratings.js"></script>
+    <script src="./asset/js/market_toggle.js"></script>
 </body>
 </html>

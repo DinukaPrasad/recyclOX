@@ -88,7 +88,7 @@ $con->close();
 
                     <!-- Add Make Deal and Cancel buttons -->
                     <div class="ad-actions">
-                        <a href="./controller/market/make_deal.php?ad_id=<?php echo $ad['ad_id']; ?>" class="btn make-deal">Make Deal</a>
+                        <a href="./controller/market/make_deal_seller.php?ad_id=<?php echo $ad['ad_id']; ?>" class="btn make-deal">Make Deal</a>
                         <a href="./market.php" class="btn cancel">Cancel</a>
                     </div>
                 </div>
