@@ -1,0 +1,853 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Side Navigation Bar */
+.side-nav {
+    width: 250px;
+    background: #4CAF50;
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.user-info h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.user-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #e0e0e0;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+}
+
+.nav-links li {
+    margin: 15px 0;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.nav-links li a:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-links li a.active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-links li a i {
+    margin-right: 10px;
+}
+
+.nav-links li.logout {
+    margin-top: auto;
+}
+
+.nav-links li.logout a {
+    background: #FF5722;
+    color: white;
+    justify-content: center;
+}
+
+.nav-links li.logout a:hover {
+    background: #e64a19; /* Darker shade on hover */
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    background: white;
+}
+
+/* Dashboard Sections */
+.dashboard-section {
+    display: none; /* Hide all sections by default */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.dashboard-section.active {
+    display: block; /* Show the active section */
+}
+
+/* Profile Header */
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+/* Stats Cards */
+.stats-cards {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.stats-cards .card {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    flex: 1;
+    margin: 0 10px;
+}
+
+.stats-cards .card h4 {
+    margin: 0 0 10px;
+    font-size: 1rem;
+    color: #555;
+}
+
+.stats-cards .card p {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+/* Profile Details */
+.profile-details {
+    max-width: 600px;
+    margin: 0 auto 20px;
+}
+
+.profile-field {
+    margin-bottom: 15px;
+}
+
+.profile-field label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.profile-field p {
+    margin: 0;
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Buttons */
+.edit-profile-btn, .change-password-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-right: 10px;
+}
+
+.edit-profile-btn:hover, .change-password-btn:hover {
+    background: #45a049;
+}
+
+/* General Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #555;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+
+/* Form Styles (Shared Across All Modals) */
+.modal-content h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.form-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.form-actions .cancel-btn {
+    background-color: #ccc;
+    color: #333;
+}
+
+.form-actions .cancel-btn:hover {
+    background-color: #bbb;
+}
+
+.form-actions .save-btn {
+    background-color: #27ae60; /* Green for Save button */
+    color: white;
+}
+
+.form-actions .save-btn:hover {
+    background-color: #219653; /* Darker green on hover */
+}
+
+/* Edit Profile Modal */
+#editProfileModal .modal-content {
+    border: 2px solid #3498db; /* Blue border for Edit Profile Modal */
+}
+
+#editProfileModal h2 {
+    color: #3498db; /* Blue heading for Edit Profile Modal */
+}
+
+#editProfileModal .form-group {
+    margin-bottom: 15px;
+}
+
+#editProfileModal .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+#editProfileModal .form-group input,
+#editProfileModal .form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#editProfileModal .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#editProfileModal .form-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+#editProfileModal .form-actions .cancel-btn {
+    background-color: #ccc;
+    color: #333;
+}
+
+#editProfileModal .form-actions .cancel-btn:hover {
+    background-color: #bbb;
+}
+
+#editProfileModal .form-actions .save-btn {
+    background-color: #3498db; /* Blue for Save button */
+    color: white;
+}
+
+#editProfileModal .form-actions .save-btn:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+
+#changePasswordModal .modal-content {
+    border: 2px solid #e67e22; /* Orange border for Change Password Modal */
+}
+
+#changePasswordModal h2 {
+    color: #e67e22; /* Orange heading for Change Password Modal */
+}
+
+#createAdModal .modal-content {
+    border: 2px solid #9b59b6; /* Purple border for Create Ad Modal */
+}
+
+#createAdModal h2 {
+    color: #9b59b6; /* Purple heading for Create Ad Modal */
+}
+
+#addFavoritesModal .modal-content {
+    border: 2px solid #e74c3c; /* Red border for Add to Favorites Modal */
+}
+
+#addFavoritesModal h2 {
+    color: #e74c3c; /* Red heading for Add to Favorites Modal */
+}
+
+#EditAdModal .modal-content {
+    border: 2px solid #27ae60; /* Green border for Edit Ad Modal */
+}
+
+#EditAdModal h2 {
+    color: #27ae60; /* Green heading for Edit Ad Modal */
+}
+
+
+
+/* My Listed Items Section */
+.create-ad-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background 0.3s ease;
+}
+
+.create-ad-btn:hover {
+    background: #45a049;
+}
+
+/* My Listed Items Section */
+#my-listed-items {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#my-listed-items h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-align: center;
+}
+
+.create-ad-btn {
+    background-color: #27ae60; /* Green */
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.create-ad-btn:hover {
+    background-color: #219653; /* Darker Green */
+}
+
+.ads-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.ad-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.ad-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.ad-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.ad-details {
+    padding: 15px;
+    flex-grow: 1;
+}
+
+.ad-details h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.ad-details p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.ad-details .status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status.active {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status.inactive {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.ad-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background-color: #f1f1f1;
+    border-top: 1px solid #ddd;
+}
+
+.ad-actions button {
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.ad-actions .edit-btn {
+    background-color: #f39c12; /* Orange */
+    color: white;
+}
+
+.ad-actions .edit-btn:hover {
+    background-color: #e67e22; /* Darker Orange */
+}
+
+.ad-actions .delete-btn {
+    background-color: #e74c3c; /* Red */
+    color: white;
+}
+
+.ad-actions .delete-btn:hover {
+    background-color: #c0392b; /* Darker Red */
+}
+
+.no-ads-message {
+    text-align: center;
+    font-size: 16px;
+    color: #777;
+    margin-top: 20px;
+}
+
+/* Favorites Section */
+.favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.category-card, .category-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-card:hover, .category-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.category-card h3, .category-item h3 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.add-favorite-btn, .remove-favorite-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.add-favorite-btn:hover, .remove-favorite-btn:hover {
+    background: #45a049;
+}
+
+.remove-favorite-btn {
+    background: #FF5722;
+}
+
+.remove-favorite-btn:hover {
+    background: #e64a19;
+}
+
+.categories-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* My Rates Section */
+.rates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.rate-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rate-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.rate-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.rate-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.rate-form label {
+    font-weight: bold;
+}
+
+.rate-form input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.rate-form button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.rate-form button:hover {
+    background: #45a049;
+}
+
+/* Reviews & Feedbacks Section */
+.feedback-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.feedback-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feedback-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.feedback-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.rating {
+    color: #FFD700; /* Gold color for stars */
+}
+
+.from-user {
+    font-weight: bold;
+    color: #333;
+}
+
+.date {
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.feedback-comment p {
+    margin: 0;
+    color: #555;
+}
+
+/* Notifications Section */
+.notifications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+}
+
+.notification-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.notification-item.unread {
+    border-left: 5px solid #4CAF50; /* Green border for unread notifications */
+}
+
+.notification-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.notification-message p {
+    margin: 0;
+    color: #333;
+}
+
+.notification-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.notification-footer .status {
+    font-weight: bold;
+    color: #4CAF50; /* Green for unread, gray for read */
+}
+
+.notification-footer .status.read {
+    color: #777;
+}
+
+.mark-read-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.mark-read-btn:hover {
+    background: #45a049;
+}
+
+/* Deals Section */
+.deals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.deal-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: #f9f9f9;
+}
+
+.deal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.deal-header h3 {
+    margin: 0;
+}
+
+.status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+.status.pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status.accepted {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status.cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.status.completed {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.deal-actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.accept-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.complete-btn {
+    background-color: #17a2b8;
+    color: white;
+}
