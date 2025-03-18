@@ -3,11 +3,11 @@ session_start();
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: ../../login_register.php");
     exit();
 }
 
-require_once './config/db_connection.php'; // Database connection file
+require_once ('../../config/db_connection.php');
 
 // Get form data
 $user_id = $_SESSION['user_id'];
@@ -20,14 +20,14 @@ $profile_picture = $_FILES['profile_picture'] ?? null;
 // Validate input
 if (!$first_name || !$last_name || !$phone_number || !$address) {
     $_SESSION['error'] = "All fields are required.";
-    header("Location: user_dashboard.php");
+    header("Location: ../../user_dashboard.php");
     exit();
 }
 
 // Handle profile picture upload
 $image_path = null;
 if ($profile_picture && $profile_picture['error'] === UPLOAD_ERR_OK) {
-    $upload_dir = 'images/profile_pictures/';
+    $upload_dir = './image/profile_pictures/';
     $file_name = basename($profile_picture['name']);
     $file_path = $upload_dir . $file_name;
 
@@ -36,7 +36,7 @@ if ($profile_picture && $profile_picture['error'] === UPLOAD_ERR_OK) {
         $image_path = $file_path;
     } else {
         $_SESSION['error'] = "Failed to upload profile picture.";
-        header("Location: user_dashboard.php");
+        header("Location: ../../user_dashboard.php");
         exit();
     }
 }
@@ -69,6 +69,6 @@ $stmt->close();
 $con->close();
 
 // Redirect back to the dashboard
-header("Location: user_dashboard.php");
+header("Location: ../../user_dashboard.php");
 exit();
 ?>

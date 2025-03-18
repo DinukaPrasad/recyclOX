@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-require_once './config/db_connection.php'; // Database connection file
+require_once ('../../config/db_connection.php');
 
 // Delete ad
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {

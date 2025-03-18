@@ -3,11 +3,11 @@
 session_start();
 
 // Include the database connection file
-require_once './config/db_connection.php';
+require_once '../../config/db_connection.php';
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: ../../login-register.php");
     exit();
 }
 
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($stmt->execute()) {
                 // Redirect to the profile page with a success message
                 $_SESSION['success_message'] = "Password changed successfully!";
-                header("Location: user_dashboard.php");
+                header("Location: ../../user_dashboard.php");
                 exit();
             } else {
                 $errors[] = "Failed to update password. Please try again.";
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // If there are errors, redirect back to the change password page with error messages
 if (!empty($errors)) {
     $_SESSION['errors'] = $errors;
-    header("Location: user_dashboard.php");
+    header("Location: ../../user_dashboard.php");
     exit();
 }
 

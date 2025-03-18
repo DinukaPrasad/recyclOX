@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-require_once './config/db_connection.php'; // Database connection file
+require_once '../../config/db_connection.php'; // Database connection file
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -16,58 +16,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category_id = filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT);
     $city_id = filter_input(INPUT_POST, 'city_id', FILTER_VALIDATE_INT);
     $weight = filter_input(INPUT_POST, 'weight', FILTER_VALIDATE_FLOAT);
-    $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
     $description = htmlspecialchars(trim($_POST['description']));
 
     // Validate required fields
-    if (!$category_id || !$city_id || !$weight || !$price || empty($description)) {
+    if (!$category_id || !$city_id || !$weight || empty($description)) {
         die("Invalid input. Please fill in all fields correctly.");
     }
 
+    // Handle image upload
+    $image_path = null;
+    if (isset($_FILES['ad_image']) && $_FILES['ad_image']['error'] === UPLOAD_ERR_OK) {
+        $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+        $file_type = $_FILES['ad_image']['type'];
+
+        if (in_array($file_type, $allowed_types)) {
+            $target_dir = "../../image/ads/"; // Set the target directory to "image/ads/"
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir, 0755, true); // Create the directory if it doesn't exist
+            }
+
+            $file_extension = pathinfo($_FILES['ad_image']['name'], PATHINFO_EXTENSION);
+            $file_name = uniqid() . "." . $file_extension; // Generate a unique file name
+            $target_file = $target_dir . $file_name;
+
+            if (move_uploaded_file($_FILES['ad_image']['tmp_name'], $target_file)) {
+                $image_path = $target_file; // Save the correct file path
+            } else {
+                die("Error uploading file.");
+            }
+        } else {
+            die("Invalid file type. Only JPEG, PNG, and GIF are allowed.");
+        }
+    }
+
     // Insert ad into the database
-    $sql = "INSERT INTO Advertisements (seller_id, category_id, city_id, weight, price, description, status) 
-            VALUES (?, ?, ?, ?, ?, ?, 'active')";
+    $sql = "INSERT INTO Advertisements (seller_id, category_id, postal_code, weight, description, ad_image, status) 
+            VALUES (?, ?, ?, ?, ?, ?, 'pending')";
     $stmt = $con->prepare($sql);
     if (!$stmt) {
         die("Error preparing statement: " . $con->error);
     }
-    $stmt->bind_param("iiidds", $seller_id, $category_id, $city_id, $weight, $price, $description);
+    $stmt->bind_param("iiidss", $seller_id, $category_id, $city_id, $weight, $description, $image_path);
 
     if ($stmt->execute()) {
-        $ad_id = $stmt->insert_id;
-
-        // Handle image upload
-        if (isset($_FILES['ad_image']) && $_FILES['ad_image']['error'] === UPLOAD_ERR_OK) {
-            // Validate the uploaded file
-            $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
-            $file_type = $_FILES['ad_image']['type'];
-
-            if (in_array($file_type, $allowed_types)) {
-                $target_dir = "images/ads/";
-                if (!is_dir($target_dir)) {
-                    mkdir($target_dir, 0755, true); // Create the directory if it doesn't exist
-                }
-                $target_file = $target_dir . $ad_id . ".jpg";
-
-                // Convert the image to JPEG if it's not already
-                if ($file_type === 'image/png') {
-                    $image = imagecreatefrompng($_FILES['ad_image']['tmp_name']);
-                    imagejpeg($image, $target_file, 90); // Convert to JPEG with 90% quality
-                    imagedestroy($image);
-                } elseif ($file_type === 'image/gif') {
-                    $image = imagecreatefromgif($_FILES['ad_image']['tmp_name']);
-                    imagejpeg($image, $target_file, 90); // Convert to JPEG with 90% quality
-                    imagedestroy($image);
-                } else {
-                    move_uploaded_file($_FILES['ad_image']['tmp_name'], $target_file);
-                }
-            } else {
-                die("Invalid file type. Only JPEG, PNG, and GIF are allowed.");
-            }
-        }
-
         // Redirect to the user dashboard
-        header("Location: user_dashboard.php");
+        header("Location: ../../user_dashboard.php");
         exit();
     } else {
         die("Error creating ad: " . $stmt->error);

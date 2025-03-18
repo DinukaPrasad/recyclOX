@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-require_once './config/db_connection.php'; // Database connection file
+require_once '../../config/db_connection.php'; // Database connection file
 
 $data = json_decode(file_get_contents('php://input'), true);
 $category_id = $data['category_id'];

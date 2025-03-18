@@ -10,7 +10,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 $deal_id = $data['deal_id'];
 $status = $data['status'];
 
-require_once './config/db_connection.php'; // Database connection file
+require_once '../../config/db_connection.php'; // Database connection file
 
 // Update deal status
 $sql = "UPDATE Deals SET deal_status = ? WHERE deal_id = ?";

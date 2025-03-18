@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-require_once './config/db_connection.php';
+require_once ('./config/db_connection.php');
 
 // Fetch user data from the database
 $user_id = $_SESSION['user_id'];
@@ -97,10 +97,10 @@ if ($result->num_rows > 0) {
 
 // Fetch ads for the logged-in user
 $seller_id = $_SESSION['user_id'];
-$sql = "SELECT a.*, c.category_name AS category_name, ci.name_en AS city_name
+$sql = "SELECT a.*, c.category_name AS category_name, l.city AS city_name
         FROM Advertisements a
         JOIN GarbageCategory c ON a.category_id = c.category_id
-        JOIN cities ci ON a.city_id = ci.id
+        JOIN location l ON a.postal_code = l.postal_code
         WHERE a.seller_id = ?";
 $stmt = $con->prepare($sql);
 $stmt->bind_param("i", $seller_id);
@@ -110,12 +110,12 @@ $ads = $result->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
 
 // Fetch cities
-$sql = "SELECT id, name_en FROM cities";
+$sql = "SELECT * FROM location";
 $result = $con->query($sql);
 $cities = $result->fetch_all(MYSQLI_ASSOC);
 
 // Fetch all categories
-$sql = "SELECT category_id, category_name FROM GarbageCategory";
+$sql = "SELECT category_id, category_name FROM garbagecategory";
 $result = $con->query($sql);
 $categories = $result->fetch_all(MYSQLI_ASSOC);
 
@@ -215,8 +215,10 @@ $con->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard - RecyclOX</title>
-    <link rel="stylesheet" href="user_dashboard.css">
+    <link rel="stylesheet" href="./asset/css/user_dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script src="./asset/js/user_dashboard_demo.js"></script>
 </head>
 <body>
     <!-- Dashboard Container -->
@@ -224,7 +226,7 @@ $con->close();
         <!-- Side Navigation Bar -->
         <div class="side-nav">
             <div class="user-info">
-                <img src="<?php echo !empty($user['profile_picture']) ? $user['profile_picture'] : 'images/default-avatar.jpg'; ?>" alt="User Avatar" class="user-avatar">
+                <img src="<?php echo !empty($user['profile_picture']) ? $user['profile_picture'] : 'image/default-avatar.jpg'; ?>" alt="User Avatar" class="user-avatar">
                 <h3><?php echo htmlspecialchars($user['first_name'] . ' ' . $user['last_name']); ?></h3>
                 <p><?php echo htmlspecialchars($user['email']); ?></p>
             </div>
@@ -246,7 +248,7 @@ $con->close();
             <section id="my-profile" class="dashboard-section active">
                 <h2>My Profile</h2>
                 <div class="profile-header">
-                    <img src="<?php echo !empty($user['profile_picture']) ? $user['profile_picture'] : 'images/default-avatar.jpg'; ?>" alt="Profile Picture" class="profile-picture">
+                    <img src="<?php echo !empty($user['profile_picture']) ? $user['profile_picture'] : 'image/default-avatar.jpg'; ?>" alt="Profile Picture" class="profile-picture">
                     <h3><?php echo $user['first_name'] . ' ' . $user['last_name']; ?></h3>
                 </div>
 
@@ -302,7 +304,7 @@ $con->close();
                 <div class="modal-content">
                     <span class="close" onclick="closeEditProfileModal()">&times;</span>
                     <h2>Edit Profile</h2>
-                    <form action="update_profile.php" method="POST" enctype="multipart/form-data">
+                    <form action="./controller/user_controller/update_profile.php" method="POST" enctype="multipart/form-data">
                         <!-- Profile Picture Upload -->
                         <div class="form-group">
                             <label for="profile-picture">Profile Picture:</label>
@@ -343,12 +345,48 @@ $con->close();
                 </div>
             </div>
 
+            <!-- Edit Ad Modal -->
+            <div id="EditAdModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="closeEditAdModal()">&times;</span>
+                    <h2>Edit Ad</h2>
+                    <form id="editAdForm" action="./controller/user_controller/edit_ad.php" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" id="editAdId" name="ad_id">
+                        <div class="form-group">
+                            <label for="editCategory">Category</label>
+                            <input type="text" id="editCategory" name="category" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editLocation">Location</label>
+                            <input type="text" id="editLocation" name="location" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editWeight">Weight (kg)</label>
+                            <input type="number" id="editWeight" name="weight" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editDescription">Description</label>
+                            <textarea id="editDescription" name="description" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="editImage">Ad Image</label>
+                            <input type="file" id="editImage" name="ad_image" accept="image/*">
+                            <small>Leave blank to keep the current image.</small>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="cancel-btn" onclick="closeEditAdModal()">Cancel</button>
+                            <button type="submit" class="save-btn">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <!-- Change Password Modal -->
             <div id="changePasswordModal" class="modal">
                 <div class="modal-content">
                     <span class="close" onclick="closeChangePasswordModal()">&times;</span>
                     <h2>Change Password</h2>
-                    <form action="change_password.php" method="POST">
+                    <form action="./controller/user_controller/change_password.php" method="POST">
                         <label for="current-password">Current Password:</label>
                         <input type="password" id="current-password" name="current_password" required>
 
@@ -371,52 +409,51 @@ $con->close();
                     <i class="fas fa-plus"></i> Create Ad
                 </button>
 
-            <!-- Ads Grid -->
-            <div class="ads-grid">
-                <?php if (!empty($ads)): ?>
-                    <?php foreach ($ads as $ad): ?>
-                        <div class="ad-card">
-                            <div class="ad-image">
-                                <img src="images/ads/<?php echo htmlspecialchars($ad['ad_image'] ?? 'default.jpg'); ?>" alt="Ad Image">
+                <!-- Ads Grid -->
+                <div class="ads-grid">
+                    <?php if (!empty($ads)): ?>
+                        <?php foreach ($ads as $ad): ?>
+                            <div class="ad-card">
+                                <div class="ad-image">
+                                    <img src="image/ads/<?php echo htmlspecialchars($ad['ad_image'] ?? 'default.jpg'); ?>" alt="Ad Image">
+                                </div>
+                                <div class="ad-details">
+                                    <h3><?php echo htmlspecialchars($ad['category_name']); ?></h3>
+                                    <p><strong>Location:</strong> <?php echo htmlspecialchars($ad['city_name']); ?></p>
+                                    <p><strong>Weight:</strong> <?php echo htmlspecialchars($ad['weight']); ?> kg</p>
+                                    <p><strong>Status:</strong> <span class="status <?php echo strtolower($ad['status']); ?>"><?php echo htmlspecialchars($ad['status']); ?></span></p>
+                                    <p><strong>Description:</strong> <?php echo nl2br(htmlspecialchars($ad['description'])); ?></p>
+                                </div>
+                                <div class="ad-actions">
+                                    <button class="edit-btn" onclick="openEditAdModal(
+                                        <?php echo $ad['ad_id']; ?>,
+                                        '<?php echo htmlspecialchars($ad['category_name']); ?>',
+                                        '<?php echo htmlspecialchars($ad['city_name']); ?>',
+                                        <?php echo htmlspecialchars($ad['weight']); ?>,
+                                        '<?php echo htmlspecialchars($ad['status']); ?>',
+                                        '<?php echo htmlspecialchars($ad['description']); ?>',
+                                        '<?php echo htmlspecialchars($ad['ad_image']); ?>'
+                                    )">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button class="delete-btn" onclick="deleteAd(event, <?php echo $ad['ad_id']; ?>)">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </div>
                             </div>
-                            <div class="ad-details">
-                                <h3><?php echo htmlspecialchars($ad['category_name']); ?></h3>
-                                <p><strong>Location:</strong> <?php echo htmlspecialchars($ad['city_name']); ?></p>
-                                <p><strong>Weight:</strong> <?php echo htmlspecialchars($ad['weight']); ?> kg</p>
-                                <p><strong>Price:</strong> Rs. <?php echo number_format($ad['price'], 2); ?></p>
-                                <p><strong>Status:</strong> <span class="status <?php echo strtolower($ad['status']); ?>"><?php echo htmlspecialchars($ad['status']); ?></span></p>
-                                <p><strong>Description:</strong> <?php echo nl2br(htmlspecialchars($ad['description'])); ?></p>
-                            </div>
-                            <div class="ad-actions">
-                                <button class="edit-btn" onclick="openEditAdModal(
-                                    <?php echo $ad['ad_id']; ?>,
-                                    '<?php echo htmlspecialchars($ad['category_name']); ?>',
-                                    '<?php echo htmlspecialchars($ad['city_name']); ?>',
-                                    <?php echo htmlspecialchars($ad['weight']); ?>,
-                                    <?php echo htmlspecialchars($ad['price']); ?>,
-                                    '<?php echo htmlspecialchars($ad['status']); ?>',
-                                    '<?php echo htmlspecialchars($ad['description']); ?>',
-                                    '<?php echo htmlspecialchars($ad['ad_image']); ?>'
-                                )">
-                                    <i class="fas fa-edit"></i> Edit
-                                </button>
-                                <button class="delete-btn" onclick="deleteAd(event, <?php echo $ad['ad_id']; ?>)">
-                                    <i class="fas fa-trash"></i> Delete
-                                </button>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p class="no-ads-message">No ads listed yet.</p>
-                <?php endif; ?>
-            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="no-ads-message">No ads listed yet.</p>
+                    <?php endif; ?>
+                </div>
+            </section>
 
             <!-- Create Ad Modal -->
             <div id="createAdModal" class="modal">
                 <div class="modal-content">
                     <span class="close" onclick="closeCreateAdModal()">&times;</span>
                     <h2>Create New Ad</h2>
-                    <form action="create_ad.php" method="POST" enctype="multipart/form-data">
+                    <form action="./controller/user_controller/create_ad.php" method="POST" enctype="multipart/form-data">
                         <label for="ad-image">Item Image:</label>
                         <input type="file" id="ad-image" name="ad_image" accept="image/*" required>
 
@@ -425,20 +462,15 @@ $con->close();
                             <?php foreach ($categories as $category): ?>
                                 <option value="<?php echo $category['category_id']; ?>"><?php echo htmlspecialchars($category['category_name']); ?></option>
                             <?php endforeach; ?>
-                        </select>
-
+                        
                         <label for="ad-location">Location:</label>
                         <select id="ad-location" name="city_id" required>
                             <?php foreach ($cities as $city): ?>
-                                <option value="<?php echo $city['id']; ?>"><?php echo htmlspecialchars($city['name_en']); ?></option>
+                                <option value="<?php echo $city['postal_code']; ?>"><?php echo htmlspecialchars($city['city']); ?></option>
                             <?php endforeach; ?>
-                        </select>
 
                         <label for="ad-weight">Weight (kg):</label>
                         <input type="number" id="ad-weight" name="weight" step="0.01" min="0" required>
-
-                        <label for="ad-price">Price (Rs):</label>
-                        <input type="number" id="ad-price" name="price" step="0.01" min="0" required>
 
                         <label for="ad-description">Description:</label>
                         <textarea id="ad-description" name="description" rows="4" required></textarea>
@@ -453,7 +485,7 @@ $con->close();
                 <div class="modal-content">
                     <span class="close-btn" onclick="closeEditAdModal()">&times;</span>
                     <h2>Edit Ad</h2>
-                    <form id="editAdForm" action="edit_ad.php" method="POST" enctype="multipart/form-data">
+                    <form id="editAdForm" action="./controller/user_controller/edit_ad.php" method="POST" enctype="multipart/form-data">
                         <input type="hidden" id="editAdId" name="ad_id">
                         <div class="form-group">
                             <label for="editCategory">Category</label>
@@ -466,17 +498,6 @@ $con->close();
                         <div class="form-group">
                             <label for="editWeight">Weight (kg)</label>
                             <input type="number" id="editWeight" name="weight" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="editPrice">Price (Rs.)</label>
-                            <input type="number" id="editPrice" name="price" step="0.01" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="editStatus">Status</label>
-                            <select id="editStatus" name="status" required>
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
                         </div>
                         <div class="form-group">
                             <label for="editDescription">Description</label>
@@ -516,14 +537,16 @@ $con->close();
                                     <p><strong>Created At:</strong> <?php echo date('M d, Y', strtotime($deal['created_at'])); ?></p>
                                 </div>
                                 <div class="deal-actions">
-                                    <?php if ($deal['deal_status'] === 'pending' && $deal['is_seller']): ?>
+                                    <?php if ($deal['deal_status'] === 'pending' && $deal['seller_name']): ?>
+                                        <!-- Accept and Reject Buttons for Seller -->
                                         <button class="accept-btn" onclick="updateDealStatus(<?php echo $deal['deal_id']; ?>, 'accepted')">
                                             Accept Deal
                                         </button>
-                                        <button class="cancel-btn" onclick="updateDealStatus(<?php echo $deal['deal_id']; ?>, 'cancelled')">
-                                            Cancel Deal
+                                        <button class="reject-btn" onclick="updateDealStatus(<?php echo $deal['deal_id']; ?>, 'rejected')">
+                                            Reject Deal
                                         </button>
-                                    <?php elseif ($deal['deal_status'] === 'accepted' && $deal['is_buyer']): ?>
+                                    <?php elseif ($deal['deal_status'] === 'accepted' && $deal['buyer_name']): ?>
+                                        <!-- Mark as Completed Button for Buyer -->
                                         <button class="complete-btn" onclick="updateDealStatus(<?php echo $deal['deal_id']; ?>, 'completed')">
                                             Mark as Completed
                                         </button>
@@ -571,7 +594,7 @@ $con->close();
                     <?php if (!empty($favorite_categories)): ?>
                         <?php foreach ($favorite_categories as $category): ?>
                             <div class="category-card">
-                                <h3><?php echo htmlspecialchars($category['name_en']); ?></h3>
+                                <h3><?php echo htmlspecialchars($category['category_name']); ?></h3>
                                 <button class="remove-favorite-btn" onclick="removeFavorite(<?php echo $category['category_id']; ?>)">
                                     <i class="fas fa-heart"></i> Remove from Favorites
                                 </button>
@@ -596,8 +619,8 @@ $con->close();
                     <div class="categories-list">
                         <?php foreach ($categories as $category): ?>
                             <div class="category-item">
-                                <h3><?php echo htmlspecialchars($category['name_en']); ?></h3>
-                                <?php if (in_array($category['category_id'], $favorite_ids)): ?>
+                                <h3><?php echo htmlspecialchars($category['category_name']); ?></h3>
+                                <?php if (in_array($category['category_id'], $favorite_ids ?? [])): ?>
                                     <button class="remove-favorite-btn" onclick="removeFavorite(<?php echo $category['category_id']; ?>)">
                                         <i class="fas fa-heart"></i> Remove from Favorites
                                     </button>
@@ -610,7 +633,7 @@ $con->close();
                         <?php endforeach; ?>
                     </div>
                 </div>
-            </div>
+            </div>
 
             <!-- My Rates Section -->
             <section id="my-rates" class="dashboard-section">
@@ -619,7 +642,7 @@ $con->close();
                     <?php if (!empty($categories)): ?>
                         <?php foreach ($categories as $category): ?>
                             <div class="rate-card">
-                                <h3><?php echo htmlspecialchars($category['name_en'] ?? ''); ?></h3>
+                                <h3><?php echo htmlspecialchars($category['category_name'] ?? ''); ?></h3>
                                 <form class="rate-form" onsubmit="saveRate(event, <?php echo $category['category_id']; ?>)">
                                     <label for="price-per-kg-<?php echo $category['category_id']; ?>">Price per kg (Rs):</label>
                                     <input type="number" id="price-per-kg-<?php echo $category['category_id']; ?>" 
@@ -667,7 +690,5 @@ $con->close();
             </section>
         </div>
     </div>
-
-    <script src="user_dashboard.js"></script>
 </body>
 </html>

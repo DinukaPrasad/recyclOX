@@ -294,8 +294,8 @@ $userName = $_SESSION['name'];
                                             <td><?= htmlspecialchars($ad['category_name']); ?></td>
                                             <td><?= htmlspecialchars($ad['weight']); ?></td>
                                             <td>
-                                            <a href="./controller/accept_advertisement.php?id=<?= $ad['ad_id']; ?>">Accept</a> |
-                                            <a href="./controller/reject_advertisement.php?id=<?= $ad['ad_id']; ?>" onclick="return confirm('Are you sure you want to delete this deal?');">Reject</a>
+                                            <a class="btn-3 btn-green" href="./controller/accept_advertisement.php?id=<?= $ad['ad_id']; ?>">Accept</a> |
+                                            <a class="btn-3 btn-red" href="./controller/reject_advertisement.php?id=<?= $ad['ad_id']; ?>" onclick="return confirm('Are you sure you want to delete this deal?');">Reject</a>
 
                                             </td>
                                         </tr>

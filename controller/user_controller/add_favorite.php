@@ -5,7 +5,7 @@ if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'User not logged in']);
     exit();
 }
-require_once './config/db_connection.php'; // Database connection file
+require_once '../../config/db_connection.php'; // Database connection file
 
 $data = json_decode(file_get_contents('php://input'), true);
 $category_id = $data['category_id'];
