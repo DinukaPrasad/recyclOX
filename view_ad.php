@@ -51,7 +51,7 @@ $con->close();
             <a href="./index.php">Home</a>
             <?php if (isset($_SESSION['name'])): ?>
                 <!-- Display username and logout button if logged in -->
-                <a href="#">Welcome, <?php echo htmlspecialchars($_SESSION['name']); ?></a>
+                <a href="./user_dashboard.php">Welcome, <?php echo htmlspecialchars($_SESSION['name']); ?></a>
                 <a href="./controller/logout_function.php" class="btn-1">Logout</a>
             <?php else: ?>
                 <!-- Display login button if not logged in -->

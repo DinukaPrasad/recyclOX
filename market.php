@@ -1,4 +1,4 @@
-<<?php
+<?php
 // Start the session
 session_start();
 
@@ -100,6 +100,28 @@ if ($highestPriceResult->num_rows > 0) {
     }
 }
 
+// Fetch user's favorite categories if logged in
+$favorite_categories = [];
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    $favorite_sql = "SELECT category_id FROM UserFavorites WHERE user_id = $user_id";
+    $favorite_result = $con->query($favorite_sql);
+    if ($favorite_result) {
+        $favorite_categories = $favorite_result->fetch_all(MYSQLI_ASSOC);
+    }
+}
+
+// Filter advertisements based on favorite categories
+$favorite_ads = [];
+if (!empty($favorite_categories)) {
+    $favorite_category_ids = array_column($favorite_categories, 'category_id');
+    foreach ($advertisements as $ad) {
+        if (in_array($ad['category_id'], $favorite_category_ids)) {
+            $favorite_ads[] = $ad;
+        }
+    }
+}
+
 // Close the database connection
 $con->close();
 ?>
@@ -187,24 +209,41 @@ $con->close();
 
             <!-- Product Grid -->
             <main>
-                <div class="product-grid" id="product-grid">
-                    <?php
-                    // Display advertisements
-                    if (empty($advertisements)) {
-                        echo '<p>No advertisements found.</p>';
-                    } else {
-                        foreach ($advertisements as $ad) {
-                            echo '
-                            <a href="./view_ad.php?ad_id=' . $ad['ad_id'] . '" class="product-card">
-                                <h3>' . htmlspecialchars($ad['description']) . '</h3>
-                                <p><strong>Category:</strong> ' . htmlspecialchars($ad['category_name']) . '</p>
-                                <p><strong>Weight:</strong> ' . htmlspecialchars($ad['weight']) . ' kg</p>
-                                <p><strong>Location:</strong> ' . htmlspecialchars($ad['city']) . '</p>
-                            </a>';
-                        }
-                    }
-                    ?>
-                </div>
+                <!-- User Favorite Ads Section -->
+                <?php if (!empty($favorite_ads) && isset($_SESSION['user_id'])): ?>
+                    <div id="favorite-ads">
+                        <h2>Your Favorite Ads</h2>
+                        <div class="product-grid">
+                            <?php foreach ($favorite_ads as $ad): ?>
+                                <a href="./view_ad.php?ad_id=<?php echo $ad['ad_id']; ?>" class="product-card">
+                                    <h3><?php echo htmlspecialchars($ad['description']); ?></h3>
+                                    <p><strong>Category:</strong> <?php echo htmlspecialchars($ad['category_name']); ?></p>
+                                    <p><strong>Weight:</strong> <?php echo htmlspecialchars($ad['weight']); ?> kg</p>
+                                    <p><strong>Location:</strong> <?php echo htmlspecialchars($ad['city']); ?></p>
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+                <!-- All Ads Section -->
+                <div id="all-ads">
+                    <h2>All Ads</h2>
+                    <div class="product-grid">
+                        <?php if (empty($advertisements)): ?>
+                            <p>No advertisements found.</p>
+                        <?php else: ?>
+                            <?php foreach ($advertisements as $ad): ?>
+                                <a href="./view_ad.php?ad_id=<?php echo $ad['ad_id']; ?>" class="product-card">
+                                    <h3><?php echo htmlspecialchars($ad['description']); ?></h3>
+                                    <p><strong>Category:</strong> <?php echo htmlspecialchars($ad['category_name']); ?></p>
+                                    <p><strong>Weight:</strong> <?php echo htmlspecialchars($ad['weight']); ?> kg</p>
+                                    <p><strong>Location:</strong> <?php echo htmlspecialchars($ad['city']); ?></p>
+                                </a>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                </d>
             </main>
         </div>
 

@@ -64,7 +64,21 @@ $insert_sql = "INSERT INTO notifications (user_id, message, created_at)
 
 if ($con->query($insert_sql)) {
     // Notification sent successfully
-    $_SESSION['make_deal_success'] = "Deal request sent successfully!";
+
+    // Insert the deal into the deal table
+    $deal_price = '100.00'; // Assuming the price is stored in the advertisement table
+    $deal_status = 'pending'; // Default status
+
+    $deal_sql = "INSERT INTO deals (buyer_id, ad_id, deal_status, deal_price, created_at, updated_at) 
+                 VALUES ($user_id, $ad_id, '$deal_status', $deal_price, NOW(), NOW())";
+
+    if ($con->query($deal_sql)) {
+        // Deal inserted successfully
+        $_SESSION['make_deal_success'] = "Deal request sent successfully!";
+    } else {
+        // Handle database error
+        $_SESSION['make_deal_error'] = "Error creating deal: " . $con->error;
+    }
 } else {
     // Handle database error
     $_SESSION['make_deal_error'] = "Error sending deal request: " . $con->error;
