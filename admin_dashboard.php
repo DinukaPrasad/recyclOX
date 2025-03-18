@@ -172,13 +172,13 @@ $userName = $_SESSION['name'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="./asset/css/admin_dash.css">
-    <!-- <link rel="stylesheet" href="./asset/css/components.css"> -->
+    <link rel="stylesheet" href="./asset/css/components.css">
 </head>
 <body>
     <div class="dashboard">
         <!-- Sidebar -->
         <div class="sidebar">
-            <div class="logo">
+            <div class="logo-name">
                 <h2>RecyclOX Admin Dashboard</h2>
             </div>
             <ul class="nav-links">
@@ -513,9 +513,9 @@ $userName = $_SESSION['name'];
                                         <td><?= htmlspecialchars($user['status']); ?></td>
                                         <td><?= htmlspecialchars($user['created_at']); ?></td>
                                         <td>
-                                            <a href="./controller/suspend_user.php?id=<?= $user['user_id']; ?>">Suspend</a> |
-                                            <a href="./controller/active_user.php?id=<?= $user['user_id']; ?>">Active</a> |
-                                            <a href="./controller/delete_user.php?id=<?= $user['user_id']; ?>" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+                                            <a class="btn-3 btn-yellow" href="./controller/suspend_user.php?id=<?= $user['user_id']; ?>">Suspend</a> 
+                                            <a class="btn-3 btn-green" href="./controller/active_user.php?id=<?= $user['user_id']; ?>">Active</a> 
+                                            <a class="btn-3 btn-red" href="./controller/delete_user.php?id=<?= $user['user_id']; ?>" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -538,7 +538,7 @@ $userName = $_SESSION['name'];
                     <h3>Add New Category</h3>
                     <form method="POST" action="./controller/add_garbage_cat.php">
                         <input type="text" id="category-name" name="category_name" placeholder="Enter Category Name" required>
-                        <button type="submit">Add Category</button>
+                        <button type="submit" class="btn">Add Category</button>
                     </form>
                 </div>
 
@@ -564,8 +564,8 @@ $userName = $_SESSION['name'];
                                         <td><?= htmlspecialchars($category['created_at']); ?></td>
                                         <td><?= htmlspecialchars($category['updated_at']); ?></td>
                                         <td>
-                                            <a href="./controller/edit_category.php?id=<?= $category['category_id']; ?>">Edit</a> |
-                                            <a href="./controller/delete_category.php?id=<?= $category['category_id']; ?>" onclick="return confirm('Are you sure you want to delete this category?');">Delete</a>
+                                            <a class="btn-3 btn-yellow" href="./controller/edit_category.php?id=<?= $category['category_id']; ?>">Edit</a> 
+                                            <a class="btn-3 btn-red" href="./controller/delete_category.php?id=<?= $category['category_id']; ?>" onclick="return confirm('Are you sure you want to delete this category?');">Delete</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -719,7 +719,7 @@ $userName = $_SESSION['name'];
                                         <td><?= htmlspecialchars($rating['comment']); ?></td>
                                         <td><?= htmlspecialchars($rating['created_at']); ?></td>
                                         <td>
-                                            <a href="./controller/user_feedback_delete.php?id=<?= $rating['feedback_id']; ?>" onclick="return confirm('Are you sure you want to delete this rating?');">Delete</a>
+                                            <a class="btn-3 btn-red" href="./controller/user_feedback_delete.php?id=<?= $rating['feedback_id']; ?>" onclick="return confirm('Are you sure you want to delete this rating?');">Delete</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -803,7 +803,7 @@ $userName = $_SESSION['name'];
                                         <td><?= htmlspecialchars($notification['status']); ?></td>
                                         <td><?= htmlspecialchars($notification['created_at']); ?></td>
                                         <td>
-                                            <a href="./controller/delete_notification.php?id=<?= $notification['notification_id']; ?>" onclick="return confirm('Are you sure you want to delete this notification?');">Delete</a>
+                                            <a class="btn-3 btn-red" href="./controller/delete_notification.php?id=<?= $notification['notification_id']; ?>" onclick="return confirm('Are you sure you want to delete this notification?');">Delete</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

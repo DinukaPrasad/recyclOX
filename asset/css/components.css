@@ -79,3 +79,13 @@
     background-color: #218838;
     transform: scale(1.05);
 }
+
+.btn-yellow{
+    background-color: #ffb703;
+    color: white;
+}
+
+.btn-yellow:hover{
+    background-color: #ffb703;
+    transform: scale(1.05);
+}

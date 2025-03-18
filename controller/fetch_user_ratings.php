@@ -60,7 +60,7 @@ if ($result) {
                 <td>" . htmlspecialchars($rating['comment']) . "</td>
                 <td>" . htmlspecialchars($rating['created_at']) . "</td>
                 <td>
-                    <a href='./controller/delete_user_rating.php?id=" . htmlspecialchars($rating['feedback_id']) . "' onclick='return confirm(\"Are you sure you want to delete this rating?\");'>Delete</a>
+                    <a class='btn-3 btn-red' href='./controller/delete_user_rating.php?id=" . htmlspecialchars($rating['feedback_id']) . "' onclick='return confirm(\"Are you sure you want to delete this rating?\");'>Delete</a>
                 </td>
             </tr>
             ";

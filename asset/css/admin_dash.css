@@ -8,11 +8,11 @@
 
 .btn {
     display: inline-block;
-    padding: 0.8rem 2rem;
+    padding: 0.5rem 1rem;
     background: var(--main-color);
     border-radius: 1rem;
     box-shadow: none;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: var(--bg-color);
     letter-spacing: 0.1rem;
     font-weight: 600;
@@ -45,7 +45,7 @@ body {
     padding: 20px;
 }
 
-.sidebar .logo h2 {
+.sidebar .logo-name h2 {
     text-align: center;
     margin-bottom: 30px;
 }
@@ -195,9 +195,9 @@ header h1 {
 
 .adds-container button, .add-staff button {
     padding: 10px;
-    background-color: #1abc9c;
+    background-color: var(--main-color);
     border: none;
-    color: #fff;
+    color: black;
     border-radius: 4px;
     cursor: pointer;
 }
