@@ -462,12 +462,18 @@ $con->close();
                             <?php foreach ($categories as $category): ?>
                                 <option value="<?php echo $category['category_id']; ?>"><?php echo htmlspecialchars($category['category_name']); ?></option>
                             <?php endforeach; ?>
-                        
+                        </select>
+
                         <label for="ad-location">Location:</label>
                         <select id="ad-location" name="city_id" required>
-                            <?php foreach ($cities as $city): ?>
-                                <option value="<?php echo $city['postal_code']; ?>"><?php echo htmlspecialchars($city['city']); ?></option>
-                            <?php endforeach; ?>
+                            <?php if (!empty($cities)): ?>
+                                <?php foreach ($cities as $city): ?>
+                                    <option value="<?php echo $city['postal_code']; ?>"><?php echo htmlspecialchars($city['city']); ?></option>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <option value="">No cities available</option>
+                            <?php endif; ?>
+                        </select>
 
                         <label for="ad-weight">Weight (kg):</label>
                         <input type="number" id="ad-weight" name="weight" step="0.01" min="0" required>
@@ -688,6 +694,7 @@ $con->close();
                     <?php endif; ?>
                 </div>
             </section>
+            
         </div>
     </div>
 </body>

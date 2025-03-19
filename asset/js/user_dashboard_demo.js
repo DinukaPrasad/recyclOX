@@ -244,6 +244,8 @@ function filterFeedback(minRating) {
 
 // Mark Notification as Read
 function markAsRead(notificationId) {
+    console.log("Marking notification as read:", notificationId); // Debugging
+
     fetch('./controller/user_controller/mark_notification_read.php', {
         method: 'POST',
         headers: {
@@ -251,15 +253,24 @@ function markAsRead(notificationId) {
         },
         body: JSON.stringify({ notification_id: notificationId }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.success) {
+            console.log("Notification marked as read successfully."); // Debugging
             location.reload(); // Refresh the page to update the UI
         } else {
-            alert("Failed to mark notification as read.");
+            alert("Failed to mark notification as read: " + (data.message || "Unknown error"));
         }
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error);
+        alert("An error occurred while marking the notification as read.");
+    });
 }
 
 // Function to update deal status
