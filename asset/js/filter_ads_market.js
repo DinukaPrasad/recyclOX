@@ -13,7 +13,7 @@ function filterAds() {
     fetch(`./controller/market/filter_ads.php?${params.toString()}`)
         .then(response => response.json())
         .then(data => {
-            const productGrid = document.getElementById('product-grid');
+            const productGrid = document.getElementById('all-ads').querySelector('.product-grid');
             productGrid.innerHTML = '';
 
             if (data.length === 0) {
