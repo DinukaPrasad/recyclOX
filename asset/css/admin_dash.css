@@ -220,7 +220,8 @@ table {
  }
 
  table th , table td {
-    padding: 12px 15px;
+
+    padding: 8px 15px;
  }
 
  table tbody tr {
@@ -234,6 +235,13 @@ table {
  table tbody tr:last-of-type{
     border-bottom: 2px solid var(--main-green);
  }
+
+ /* Style for the action-row */
+table tr .action-row {
+    display: flex;
+    gap: 10px; /* Adds space between buttons */
+    align-items: center; /* Vertically centers the buttons */
+}
 
  .btn-edit {
     background-color: #4CAF50;

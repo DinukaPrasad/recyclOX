@@ -54,7 +54,7 @@ $stmt = $con->prepare($sql);
 if ($image_path) {
     $stmt->bind_param("ssdsssi", $category, $location, $weight, $description, $image_path, $ad_id, $_SESSION['user_id']);
 } else {
-    $stmt->bind_param("ssdsi", $category, $location, $weight, $description, $ad_id, $_SESSION['user_id']);
+    $stmt->bind_param("ssdsii", $category, $location, $weight, $description, $ad_id, $_SESSION['user_id']);
 }
 
 $stmt->execute();

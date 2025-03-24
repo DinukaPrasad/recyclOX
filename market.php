@@ -317,7 +317,7 @@ $con->close();
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2025 Marketplace. All rights reserved.</p>
+        <p>&copy; 2025 RecyclOX. All rights reserved.</p>
     </footer>
 
     <!-- Include JavaScript for live filtering -->

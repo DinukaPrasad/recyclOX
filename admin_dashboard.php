@@ -293,8 +293,8 @@ $userName = $_SESSION['name'];
                                             <td><?= htmlspecialchars($ad['seller_name']); ?></td>
                                             <td><?= htmlspecialchars($ad['category_name']); ?></td>
                                             <td><?= htmlspecialchars($ad['weight']); ?></td>
-                                            <td>
-                                            <a class="btn-3 btn-green" href="./controller/accept_advertisement.php?id=<?= $ad['ad_id']; ?>">Accept</a> |
+                                            <td class="action-row">
+                                            <a class="btn-3 btn-green" href="./controller/accept_advertisement.php?id=<?= $ad['ad_id']; ?>">Accept</a>
                                             <a class="btn-3 btn-red" href="./controller/reject_advertisement.php?id=<?= $ad['ad_id']; ?>" onclick="return confirm('Are you sure you want to delete this deal?');">Reject</a>
 
                                             </td>
@@ -512,7 +512,7 @@ $userName = $_SESSION['name'];
                                         <td><?= htmlspecialchars($user['role']); ?></td>
                                         <td><?= htmlspecialchars($user['status']); ?></td>
                                         <td><?= htmlspecialchars($user['created_at']); ?></td>
-                                        <td>
+                                        <td class="action-row">
                                             <a class="btn-3 btn-yellow" href="./controller/suspend_user.php?id=<?= $user['user_id']; ?>">Suspend</a> 
                                             <a class="btn-3 btn-green" href="./controller/active_user.php?id=<?= $user['user_id']; ?>">Active</a> 
                                             <a class="btn-3 btn-red" href="./controller/delete_user.php?id=<?= $user['user_id']; ?>" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
@@ -563,7 +563,7 @@ $userName = $_SESSION['name'];
                                         <td><?= htmlspecialchars($category['category_name']); ?></td>
                                         <td><?= htmlspecialchars($category['created_at']); ?></td>
                                         <td><?= htmlspecialchars($category['updated_at']); ?></td>
-                                        <td>
+                                        <td class="action-row">
                                             <a class="btn-3 btn-yellow" href="./controller/edit_category.php?id=<?= $category['category_id']; ?>">Edit</a> 
                                             <a class="btn-3 btn-red" href="./controller/delete_category.php?id=<?= $category['category_id']; ?>" onclick="return confirm('Are you sure you want to delete this category?');">Delete</a>
                                         </td>

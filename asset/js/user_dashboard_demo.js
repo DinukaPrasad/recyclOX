@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function logout() {
     alert('You have been logged out.');
     // Redirect to login page or perform logout logic
-    window.location.href = 'index.php';
+    window.location.href = './controller/logout_function.php';
 }
 
 // Open Edit Profile Modal

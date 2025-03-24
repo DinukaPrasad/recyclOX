@@ -89,7 +89,8 @@ if (isset($_SESSION['user_id'])) {
     <!-- About Us Section -->
     <section class="aboutus" id="aboutUs">
         <h1 class="heading">About Us</h1>
-        <p class="subheading">Empowering communities with sustainable waste management solutions.</p>
+        <p class="subheading">RecyclOx is an innovative online platform designed to streamline the recycling process by connecting buyers and sellers of recyclable waste. As a one-stop solution for garbage trading, RecyclOx enables individuals and businesses to list, buy, and sell recyclable materials while efficiently managing garbage collection schedules. With a user-friendly interface and role-based dashboards, the platform promotes sustainability by making waste management more accessible, organized, and profitable for all stakeholders.  
+        </p>
 
         <div class="feature">
             <i class="fas fa-recycle"></i>

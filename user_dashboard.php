@@ -226,7 +226,7 @@ $con->close();
         <!-- Side Navigation Bar -->
         <div class="side-nav">
             <div class="user-info">
-                <img src="<?php echo !empty($user['profile_picture']) ? $user['profile_picture'] : 'image/default-avatar.jpg'; ?>" alt="User Avatar" class="user-avatar">
+                <img src="<?php echo !empty($user['profile_picture']) ? $user['profile_picture'] : 'image/profile_pictures/default-avatar.jpg'; ?>" alt="User Avatar" class="user-avatar">
                 <h3><?php echo htmlspecialchars($user['first_name'] . ' ' . $user['last_name']); ?></h3>
                 <p><?php echo htmlspecialchars($user['email']); ?></p>
             </div>
@@ -694,7 +694,6 @@ $con->close();
                     <?php endif; ?>
                 </div>
             </section>
-            
         </div>
     </div>
 </body>

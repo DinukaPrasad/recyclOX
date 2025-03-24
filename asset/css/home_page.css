@@ -260,10 +260,18 @@
     padding: 20px; /* Add padding inside the container */
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .paragraph-container .paragraph{
     color: black;
+}
+.paragraph-container h2{
+    font-size: 20px;
+    padding-bottom: 10px;
+    text-align: center;
 }
 
 
@@ -365,18 +373,21 @@ footer {
 }
 
 .aboutus .subheading {
-    font-size: 20px;
+    font-size: 24px;
     color: #666;
     margin-bottom: 40px;
 }
 
 .aboutus .feature {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 30px;
     text-align: left;
+    font-size: 20px;
 }
 
 .aboutus .feature i {
-    font-size: 36px;
+    font-size: 16px;
     color: #2d572c;
     margin-bottom: 10px;
 }
@@ -389,6 +400,7 @@ footer {
 
 .aboutus .cta {
     margin-top: 40px;
+    font-size: 36px;
 }
 
 .aboutus .cta p {
@@ -432,6 +444,7 @@ footer {
 
 #services .service {
     display: flex;
+    flex-direction: column;
     align-items: center;
     margin-bottom: 40px;
     background-color: #fff;
@@ -453,7 +466,7 @@ footer {
 }
 
 #services .service p {
-    font-size: 16px;
+    font-size: 20px;
     color: #666;
 }
 

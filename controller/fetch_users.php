@@ -61,7 +61,7 @@ if (!empty($users)) {
             <td>" . htmlspecialchars($user['role']) . "</td>
             <td>" . htmlspecialchars($user['status']) . "</td>
             <td>" . htmlspecialchars($user['created_at']) . "</td>
-            <td>
+            <td class='action-row'>
                 <a class='btn-3 btn-yellow' href='./controller/suspend_user.php?id=" . $user['user_id'] . "'>Suspend</a> |
                 <a class='btn-3 btn-green' href='./controller/active_user.php?id=" . $user['user_id'] . "'>Active</a> |
                 <a class='btn-3 btn-red' href='./controller/delete_user.php?id=" . $user['user_id'] . "' onclick='return confirm(\"Are you sure you want to delete this user?\");'>Delete</a>
